@@ -4,12 +4,12 @@
 
 ### 결사대원들
 
- + kim jl woong  
+ + kim jin hyeok (레드)
 
- + kim jin hyeok
+ + kim jl woong  (블루)
 
- + park han seul
+ + park han seul (옐로)
 
- + park dea ung
+ + park dea ung (그린)
  
- + jo seol hwa
+ + jo seol hwa (핑크)
