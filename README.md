@@ -1,10 +1,13 @@
 # WAERDROP
 
-kim jl woong  
+## `한울 C조` 팀프로젝트 입니다.  
 
-kim jin hyeok
+### 결사대원들
 
-park han seul
+ + kim jl woong  
 
+ + kim jin hyeok
 
-park dea ung
+ + park han seul
+
+ + park dea ung
