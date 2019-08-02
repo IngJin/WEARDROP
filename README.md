@@ -1,4 +1,4 @@
-# WAERDROP
+# WEARDROP
 
 ## `한울 C조` 팀프로젝트 입니다.  
 
