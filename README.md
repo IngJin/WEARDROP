@@ -19,9 +19,9 @@
 
   
 ## 개발 환경
-<b>OS</b> : `Windows 7 Professional K `  
-<b>Tool</b> : `Eclipse Photon (4.8)`, `Android Studio(3.4.2) Pie`, `Oracle Database 11g Express Edition`  
-<b>Library</b> : `Spring 3.2.2.RELEASE`, `mybatis 3.4.6`  
+* <b>OS</b> : `Windows 7 Professional K `  
+* <b>Tool</b> : `Eclipse Photon (4.8)`, `Android Studio(3.4.2) Pie`, `Oracle Database 11g Express Edition`  
+* <b>Library</b> : `Spring 3.2.2.RELEASE`, `mybatis 3.4.6`  
 
   
 ---
