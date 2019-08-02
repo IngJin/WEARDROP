@@ -22,17 +22,33 @@
 만드는 것을 목표로 한다.
 ~~~
     
-### 개발 환경
-
-- <b>OS</b> : `Windows 7 Professional K `  
-- <b>Tool</b> : `Eclipse Photon (4.8)`, `Android Studio(3.4.2) Pie`, `Oracle Database 11g Express Edition`  
-- <b>Library</b> : `Spring 3.2.2.RELEASE`, `mybatis 3.4.6`  
-
     
+### 개발 환경
+- <b>OS</b> : `Windows 7 Professional K `  
+- <b>Tool</b> : `Eclipse Photon (4.8)`, `Android Studio(3.4.2) Pie`
+- <b>DataBase</b> : `Oracle Database 11g Express Edition`  
+- <b>Library</b> : `Spring 3.2.2.RELEASE`, `Mybatis 3.4.6`  
+
+
+### 프로젝트 기간(전체)
+~~~
+2019년 6월 27일 ~ 2019년 9월 30일
+~~~
+
+
+### 프로젝트 목표
+- 웹 / 어플리케이션을 이용하여 사용자가 현재 위치한 지역의 날씨 정보를 받아 분석하여 해당 날씨에 해당하는 코디 정보를 확인하는 것
+- 웹 / 어플리케이션을 이용하여 사용자가 현재 위치한 주변의 옷가게를 확인하는 것
+- 어플리케이션을 이용하여 사용자 개개인이 올린 의상의 세탁 정보를 확인하고, 해당 정보에 맞는 알림을 출력할 것
+- 웹 / 어플리케이션을 이용하여 사용자의 회원정보를 입력받아 접속하여 공용 게시판의 글을 확인, 작성, 수정, 삭제하는 것
+- 관리자 권한을 부여하여 게시판 접근 권한을 차등으로 부여하는 것
+
 ---
 
     
 ## 190802  
 ```
 + 형상관리(svn, git)을 이용한 코드 통합 및 1차 통합테스트 완료. (안드로이드)
++ 회원가입, 로그인, 날씨 API를 이용한 날씨정보 출력, 각 게시판에 해당되는 인텐트 기능 추가.
++ 각 게시판 RecyclerView 및 CardView를 이용하여 DB 데이터 리스트 화면 출력.
 ```
