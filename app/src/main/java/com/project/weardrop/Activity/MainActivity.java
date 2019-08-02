@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout layout;
     Button button1, button2, button3, button4, button5, button6;
+    ImageButton logout;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -39,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         tx1.setText(dto.getWriter());
 
 
+        logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         button2 = findViewById(R.id.weather);
         button2.setOnClickListener(new View.OnClickListener() {
