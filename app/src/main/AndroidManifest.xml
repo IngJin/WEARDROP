@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.weardrop">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="TeamProject"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".Activity.SecondSubAddActivity"/>
+        <activity android:name=".Activity.SecondSubActivity"/>
+        <activity android:name=".Activity.SecondDetailActivity"/>
+        <activity android:name=".Activity.SecondActivity"/>
+        <activity android:name=".Activity.MapActivity" />
+        <activity android:name=".Activity.SaleActivity" />
+        <activity android:name=".Activity.HugiActivity" />
+        <activity android:name=".Activity.BoardwriteActivity" />
+        <activity android:name=".Activity.FreedetailActivity" />
+        <activity android:name=".Activity.FreeActivity" />
+        <activity android:name=".Activity.GalleryDetailActivity"></activity>
+        <activity android:name=".Activity.GalleryActivity"/>
+        <activity android:name=".Activity.NoticeActivity"/>
+        <activity android:name=".Activity.NoticeDetailActivity"/>
+        <activity android:name=".Activity.WeatherActivity"/>
+        <activity android:name=".Activity.SignActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.IntroActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+
+</manifest>

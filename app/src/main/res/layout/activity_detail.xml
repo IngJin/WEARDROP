@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_sub1_add"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:onClick="btn2Clicked"
+            android:text="수정" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:onClick="btn3Clicked"
+            android:text="삭제" />
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:orientation="vertical"
+                android:layout_weight="2">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin ="10dp">
+
+                    <ImageView
+                        android:id="@+id/d_imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/blank" />
+
+                    <VideoView
+                        android:id="@+id/d_videoView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal|center"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/d_id"
+                android:layout_width="450dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:text="ID : "
+                android:textColor="@android:color/holo_purple"
+                android:enabled="false"
+            />
+
+            <TextView
+                android:id="@+id/d_name"
+                android:layout_width="450dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:text="닉네임 : "
+                android:textColor="@android:color/holo_purple"
+                android:enabled="false"
+                />
+
+            <TextView
+                android:id="@+id/d_title"
+                android:layout_width="450dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:text="타이틀 : "
+                android:textColor="@android:color/holo_purple"
+                android:enabled="false"
+                />
+
+            <TextView
+            android:id="@+id/d_date"
+            android:layout_width="450dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:text="날짜 : "
+            android:textColor="@android:color/holo_purple"
+            android:enabled="false"
+            />
+            <TextView
+                android:id="@+id/d_price"
+                android:layout_width="450dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:text="판매가격 : "
+                android:textColor="@android:color/holo_purple"
+                android:enabled="false"
+                />
+
+            <TextView
+                android:id="@+id/d_content"
+                android:layout_width="450dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
+                android:text="Content : "
+                android:textColor="@android:color/holo_purple"
+                android:layout_marginBottom="20dp"
+                android:enabled="false"
+                />
+
+<!-- EditText ? TextView ? -->
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

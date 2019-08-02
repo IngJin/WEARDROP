@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SignActivity"
+    android:id="@+id/Layout2">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signtext"
+        android:text="Register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120px"
+        android:fontFamily="@font/raleway_thin"
+        android:textSize="25dp"
+        android:textColor="#ffffff"
+        />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/UseridInput"
+        android:layout_centerHorizontal="true"
+        android:hint="UserID"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <Button
+        android:id="@+id/UseridDuplicate"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_alignRight="@+id/UseridInput"
+        android:layout_marginTop="98dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="Duplicate"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:textAllCaps="false" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/NickInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Nickname"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/UseridInput"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/passwordInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Password"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/NickInput"
+        android:inputType="textPassword"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/passwordCheckInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Password_Check"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/passwordInput"
+        android:inputType="textPassword"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/EmailInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Email"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/passwordCheckInput"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/PhoneInput"
+        android:layout_centerHorizontal="true"
+        android:hint="PhoneNumber"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/EmailInput"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="Register"
+        android:id="@+id/RegisterButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/PhoneInput"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:fontFamily="@font/nanumgothic"/>
+
+</RelativeLayout>

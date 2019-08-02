@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="유형">
+        <item>세일정보</item>
+        <item>자유글</item>
+        <item>후기</item>
+    </string-array>
+</resources>

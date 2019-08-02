@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout"
+    tools:context=".Activity.LoginActivity">
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/UseridInput"
+        android:layout_centerHorizontal="true"
+        android:hint="UserID"
+        android:layout_marginTop="151dp"
+        android:textColor="#ffffff"
+    	android:textColorHint="#ffffff"
+        android:fontFamily="@font/nanumgothic"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/passwordInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Password"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/UseridInput"
+        android:inputType="textPassword"
+        android:fontFamily="@font/nanumgothic"/>
+
+    <CheckBox
+        android:text="로그인 정보 기억하기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/passwordInput"
+        android:layout_marginLeft="30dp"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/nanumgothic"/>
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="LogIn"
+        android:id="@+id/loginButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/passwordInput"
+        android:layout_toStartOf="@+id/signupButton"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/nanumgothic"/>
+
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:text="Register"
+        android:id="@+id/signupButton"
+        android:textAllCaps="false"
+        android:layout_alignTop="@+id/loginButton"
+        android:layout_alignEnd="@+id/passwordInput"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:layout_marginRight="5dp"
+        android:fontFamily="@font/nanumgothic"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:id="@+id/KaKaoButton"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:id="@+id/NaverButton"
+        android:layout_width="228dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/KaKaoButton"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
