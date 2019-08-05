@@ -19,7 +19,9 @@
         android:label="TeamProject"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name="com.project.weardrop.Other.App">
+
 
         <activity android:name=".Activity.SecondSubAddActivity"/>
         <activity android:name=".Activity.SecondSubActivity"/>
@@ -46,6 +48,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
     </application>
 
 

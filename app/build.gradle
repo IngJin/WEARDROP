@@ -18,6 +18,7 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
+
 }
 
 dependencies {
@@ -45,4 +46,9 @@ dependencies {
     implementation('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }
+
+    // 카카오 로그인 sdk를 사용하기 위해 필요.
+    implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation 'com.kakao.sdk:usermgmt:1.16.0'
+
 }

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +19,17 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.auth.AccessTokenCallback;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.auth.authorization.accesstoken.AccessToken;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.LoginButton;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.UserAccount;
+import com.kakao.util.exception.KakaoException;
 import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
@@ -25,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.NameValuePair;
@@ -35,19 +48,24 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
+
 public class LoginActivity extends AppCompatActivity implements Runnable {
 
     private boolean saveLoginData;
     RelativeLayout layout;
     EditText editid, editpwd;
     Button btnLogin, btnsign;
-    Button KaKaoButton, NaverButton;
+    Button NaverButton;
+    LoginButton KaKaoButton;
+
+    SessionCallback callback;
 
     private CheckBox checkBox;
     private String id;
     private String pwd;
 
     private SharedPreferences appData;
+    private String TAG = "LoginActivity";
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -71,15 +89,15 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
         NaverButton.setBackgroundResource(R.drawable.naver);
 
         // id 값 지정
-        editid = (EditText)findViewById(R.id.UseridInput);
-        editpwd = (EditText)findViewById(R.id.passwordInput);
-        btnLogin = (Button)findViewById(R.id.loginButton);
-        btnsign = (Button)findViewById(R.id.signupButton);
+        editid = (EditText) findViewById(R.id.UseridInput);
+        editpwd = (EditText) findViewById(R.id.passwordInput);
+        btnLogin = (Button) findViewById(R.id.loginButton);
+        btnsign = (Button) findViewById(R.id.signupButton);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
 
 
         // 비밀번호 타입 *으로 보여지게 처리
-        editpwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+        editpwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editpwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         // 폰트(나눔고딕)
@@ -96,19 +114,21 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
             checkBox.setChecked(saveLoginData);
         }
 
+        kakaoData();
+
         // 버튼 클릭시 서버 통신 Thread 호출
         btnLogin.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 save();
+                save();
 
-                if ( editid.getText().toString().length() == 0 ) {
+                if (editid.getText().toString().length() == 0) {
                     Toast.makeText(LoginActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
                     editid.requestFocus();
                     return;
                 }
 
-                if ( editpwd.getText().toString().length() == 0 ) {
+                if (editpwd.getText().toString().length() == 0) {
                     Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                     editpwd.requestFocus();
                     return;
@@ -126,6 +146,8 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
                 startActivity(intent);
             }
         });
+
+
     }
 
     @Override
@@ -158,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(message != null) {
+                    if (message != null) {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         try {
                             String userid = Object.getString("userid");
@@ -208,7 +230,113 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
         id = appData.getString("ID", "");
         pwd = appData.getString("PWD", "");
     }
+
+    /**
+     * 카카오톡
+     **/
+    private void kakaoData() {
+
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+
+/** 토큰 만료시 갱신을 시켜준다**/
+        if (Session.getCurrentSession().isOpenable()) {
+            Session.getCurrentSession().checkAndImplicitOpen();
+        }
+    }
+
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            Log.e(TAG, "카카오 로그인 성공 ");
+            requestMe();
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            if (exception != null) {
+                Log.e(TAG, "exception : " + exception);
+            }
+        }
+    }
+
+    /**
+     * 사용자에 대한 정보를 가져온다
+     **/
+    private void requestMe() {
+
+        List<String> keys = new ArrayList<>();
+        keys.add("properties.nickname");
+        keys.add("properties.profile_image");
+        keys.add("kakao_account.email");
+
+        UserManagement.getInstance().me(keys, new MeV2ResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                super.onFailure(errorResult);
+                Log.e(TAG, "requestMe onFailure message : " + errorResult.getErrorMessage());
+            }
+
+            @Override
+            public void onFailureForUiThread(ErrorResult errorResult) {
+                super.onFailureForUiThread(errorResult);
+                Log.e(TAG, "requestMe onFailureForUiThread message : " + errorResult.getErrorMessage());
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                Log.e(TAG, "requestMe onSessionClosed message : " + errorResult.getErrorMessage());
+            }
+
+            @Override
+            public void onSuccess(MeV2Response result) {
+                handleScopeError(result.getKakaoAccount());
+                Log.e(TAG, "requestMe onSuccess message : " + result.getKakaoAccount().getEmail() + " " + result.getId() + " " + result.getNickname());
+
+                final String nickName = result.getNickname();//닉네임
+                final long userID = result.getId();//사용자 고유번호
+                final String pImage = result.getProfileImagePath();//사용자 프로필 경로
+                final String Email = result.getKakaoAccount().getEmail();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("name", nickName);
+                intent.putExtra("profile", userID);
+                intent.putExtra("email", Email);
+                startActivity(intent);
+                finish();
+            }
+
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleScopeError(final UserAccount account) {
+        List<String> neededScopes = new ArrayList<>();
+        if (account.needsScopeAccountEmail()) {
+            neededScopes.add("account_email");
+        }
+        Session.getCurrentSession().updateScopes(this, neededScopes, new
+                AccessTokenCallback() {
+                    @Override
+                    public void onAccessTokenReceived(AccessToken accessToken) {
+                        // 유저에게 성공적으로 동의를 받음. 토큰을 재발급 받게 됨.
+                    }
+
+                    @Override
+                    public void onAccessTokenFailure(ErrorResult errorResult) {
+                        // 동의 얻기 실패
+                    }
+                });
+    }
 }
-
-
-

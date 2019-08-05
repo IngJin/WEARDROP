@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout layout;
     Button button1, button2, button3, button4, button5, button6;
     ImageButton logout;
+
+    public String NICKNAME;
+    public String EMAIL;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -34,20 +39,34 @@ public class MainActivity extends AppCompatActivity {
         Typeface typeface = getResources().getFont(R.font.bmdohyeon_ttf);
 
         Intent intent = getIntent(); // 데이터 수신
-        MemberDTO dto = (MemberDTO)intent.getSerializableExtra("dto"); /*클래스*/
 
-        TextView tx1 = (TextView)findViewById(R.id.NickName);
+        NICKNAME = intent.getStringExtra("name");
+        EMAIL = intent.getStringExtra("email");
+        MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+
+        TextView tx1 = (TextView) findViewById(R.id.NickName);
         tx1.setTypeface(typeface);
-        tx1.setText(dto.getWriter());
 
+
+        if(dto == null) {
+            tx1.setText(EMAIL);
+        } else {
+            tx1.setText(dto.getWriter());
+        }
 
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
+                UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                    @Override
+                    public void onCompleteLogout() {
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+                });
             }
         });
 
