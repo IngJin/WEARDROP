@@ -83,4 +83,26 @@
         android:layout_below="@+id/KaKaoButton"
         android:layout_centerInParent="true"/>
 
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/email"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userid"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/writer"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+
 </RelativeLayout>

@@ -47,12 +47,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tx1 = (TextView) findViewById(R.id.NickName);
         tx1.setTypeface(typeface);
 
-
-        if(dto == null) {
-            tx1.setText(EMAIL);
-        } else {
-            tx1.setText(dto.getWriter());
-        }
+        tx1.setText(dto.getWriter());
 
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {

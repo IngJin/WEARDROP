@@ -49,11 +49,11 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
 
-public class LoginActivity extends AppCompatActivity implements Runnable {
+public class LoginActivity extends AppCompatActivity {
 
     private boolean saveLoginData;
     RelativeLayout layout;
-    EditText editid, editpwd;
+    EditText editid, editpwd, email, userid, writer;
     Button btnLogin, btnsign;
     Button NaverButton;
     LoginButton KaKaoButton;
@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
 
     private SharedPreferences appData;
     private String TAG = "LoginActivity";
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -94,6 +93,12 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
         btnLogin = (Button) findViewById(R.id.loginButton);
         btnsign = (Button) findViewById(R.id.signupButton);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+        email = (EditText) findViewById(R.id.email);
+        email.setVisibility(View.GONE);
+        writer = (EditText) findViewById(R.id.writer);
+        writer.setVisibility(View.GONE);
+        userid = (EditText) findViewById(R.id.userid);
+        userid.setVisibility(View.GONE);
 
 
         // 비밀번호 타입 *으로 보여지게 처리
@@ -134,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
                     return;
                 }
 
-                Thread th = new Thread(LoginActivity.this);
+                Thread1 th = new Thread1();
                 th.start();
             }
         });
@@ -147,65 +152,8 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
             }
         });
 
-
     }
 
-    @Override
-    public void run() {
-        String url = "http://192.168.0.67:80/iot/login_android";
-        String userid = editid.getText().toString();
-        String userpw = editpwd.getText().toString();
-        try {
-            // NmaeValuePair 변수명과 값을 함께 저장하는 객체
-            HttpClient http = new DefaultHttpClient();
-            ArrayList<NameValuePair> postData = new ArrayList<>();
-            // post 방식으로 전달할 값들
-            postData.add(new BasicNameValuePair("userid", userid));
-            postData.add(new BasicNameValuePair("userpw", userpw));
-            // URI encoding이 필요한 한글, 특수문자 값들 인코딩
-            UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
-            HttpPost httpPost = new HttpPost(url);
-            // http 에 인코딩된 값 세팅
-            httpPost.setEntity(request);
-            // post 방식으로 전달하고 응답은 response에 저장
-            HttpResponse response = http.execute(httpPost);
-            // response text를 String으로 변환
-            String body = EntityUtils.toString(response.getEntity());
-            // String 을 JSON으로...
-            final JSONObject obj = new JSONObject(body);
-            final String message = obj.getString("message");
-            final JSONObject Object = new JSONObject(message);
-
-            // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (message != null) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        try {
-                            String userid = Object.getString("userid");
-                            String writer = Object.getString("writer");
-                            String userpw = Object.getString("userpw");
-                            String email = Object.getString("email");
-                            String phone = Object.getString("phone");
-                            String admin = Object.getString("admin");
-                            MemberDTO dto = new MemberDTO(userid, writer, userpw, email, phone, admin);
-                            intent.putExtra("dto", dto);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // 설정값을 저장하는 함수
     private void save() {
@@ -295,17 +243,25 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
                 handleScopeError(result.getKakaoAccount());
                 Log.e(TAG, "requestMe onSuccess message : " + result.getKakaoAccount().getEmail() + " " + result.getId() + " " + result.getNickname());
 
-                final String nickName = result.getNickname();//닉네임
-                final long userID = result.getId();//사용자 고유번호
+                final String Writer = result.getNickname();//닉네임
+                final String userId = String.valueOf(result.getId());//사용자 고유번호
                 final String pImage = result.getProfileImagePath();//사용자 프로필 경로
-                final String Email = result.getKakaoAccount().getEmail();
+                String Email = result.getKakaoAccount().getEmail();
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("name", nickName);
-                intent.putExtra("profile", userID);
-                intent.putExtra("email", Email);
-                startActivity(intent);
-                finish();
+                userid.setText(userId);
+                writer.setText(Writer);
+                email.setText(Email);
+
+                if (Email != null) {
+                    Thread2 th2 = new Thread2();
+                    th2.start();
+
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    MemberDTO dto = new MemberDTO(userId, Writer);
+                    intent.putExtra("dto", dto);
+                    startActivity(intent);
+                }
             }
 
         });
@@ -338,5 +294,172 @@ public class LoginActivity extends AppCompatActivity implements Runnable {
                         // 동의 얻기 실패
                     }
                 });
+    }
+
+    class Thread1 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/login_android";
+            String userid = editid.getText().toString();
+            String userpw = editpwd.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("userid", userid));
+                postData.add(new BasicNameValuePair("userpw", userpw));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                final JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                final JSONObject Object = new JSONObject(message);
+
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message != null) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            try {
+                                String userid = Object.getString("userid");
+                                String writer = Object.getString("writer");
+                                String userpw = Object.getString("userpw");
+                                String email = Object.getString("email");
+                                String phone = Object.getString("phone");
+                                String admin = Object.getString("admin");
+                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, phone, admin);
+                                intent.putExtra("dto", dto);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // 이메일 중복검사 서버통신
+    class Thread2 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/email_check_android";
+            String email_thread2 = email.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("email", email_thread2));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message.equals("email")) { // 중복이면
+                            // dto로 다시호출해서 값을 가져오고
+                            Thread3 th3 = new Thread3();
+                            th3.start();
+                        } else {
+                            String userId = userid.getText().toString();
+                            String Writer = writer.getText().toString();
+                            String Email = email.getText().toString();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            MemberDTO dto = new MemberDTO(userId, Writer, Email);
+                            intent.putExtra("dto", dto);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class Thread3 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/email_login_android";
+            String email_Thread3 = email.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("email", email_Thread3));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                final JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                final JSONObject Object = new JSONObject(message);
+
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message != null) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            try {
+                                String userid = Object.getString("userid");
+                                String writer = Object.getString("writer");
+                                String userpw = Object.getString("userpw");
+                                String email = Object.getString("email");
+                                String phone = Object.getString("phone");
+                                String admin = Object.getString("admin");
+                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, phone, admin);
+                                intent.putExtra("dto", dto);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            startActivity(intent);
+                            finish();
+                            return;
+                        } else {
+                            Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

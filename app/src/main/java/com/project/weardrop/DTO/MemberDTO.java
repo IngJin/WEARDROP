@@ -16,6 +16,17 @@ public class MemberDTO  implements Serializable {
         this.admin = admin;
     }
 
+    public MemberDTO(String userid, String writer, String email) {
+        this.userid = userid;
+        this.writer = writer;
+        this.email = email;
+    }
+    public MemberDTO(String userid, String writer) {
+        this.userid = userid;
+        this.writer = writer;
+    }
+
+
     public String getUserid() {
         return userid;
     }
