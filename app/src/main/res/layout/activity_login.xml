@@ -67,13 +67,19 @@
         android:fontFamily="@font/nanumgothic"/>
 
     <com.kakao.usermgmt.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/KaKaoButtonLogin"
+        />
+
+    <Button
+        android:id="@+id/KaKaoButton"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:id="@+id/KaKaoButton"
         android:layout_below="@+id/loginButton"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerInParent="true"
+        android:background="@drawable/kakao"/>
 
     <Button
         android:id="@+id/NaverButton"

@@ -55,8 +55,8 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout layout;
     EditText editid, editpwd, email, userid, writer;
     Button btnLogin, btnsign;
-    Button NaverButton;
-    LoginButton KaKaoButton;
+    Button KaKaoButton, NaverButton;
+    LoginButton KaKaoButtonLogin;
 
     SessionCallback callback;
 
@@ -75,6 +75,19 @@ public class LoginActivity extends AppCompatActivity {
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         load();
+
+
+
+        KaKaoButtonLogin = (LoginButton) findViewById(R.id.KaKaoButtonLogin);
+        KaKaoButtonLogin.setVisibility(View.GONE);
+
+        KaKaoButton = (Button) findViewById(R.id.KaKaoButton);
+        KaKaoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KaKaoButtonLogin.performClick();
+            }
+        });
 
         // 앱 배경화면
         layout = findViewById(R.id.layout);
@@ -192,7 +205,6 @@ public class LoginActivity extends AppCompatActivity {
             Session.getCurrentSession().checkAndImplicitOpen();
         }
     }
-
 
     private class SessionCallback implements ISessionCallback {
 
