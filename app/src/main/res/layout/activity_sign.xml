@@ -87,16 +87,31 @@
         android:layout_below="@+id/passwordCheckInput"
         android:fontFamily="@font/raleway_thin"/>
 
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:id="@+id/PhoneInput"
-        android:layout_centerHorizontal="true"
-        android:hint="PhoneNumber"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+    <CheckBox
+        android:id="@+id/terms"
+        android:text="본 서비스 이용 약관에 동의합니다."
+        android:textSize="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/EmailInput"
-        android:fontFamily="@font/raleway_thin"/>
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nanumgothic"
+        android:textColor="#ffffff"
+        />
+
+    <Button
+        android:id="@+id/termsbutton"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/EmailInput"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="260dp"
+        android:background="@drawable/mybutton"
+        android:fontFamily="@font/nanumgothic"
+        android:text="Terms"
+        android:textAllCaps="false"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="150dp"
@@ -104,8 +119,8 @@
         android:text="Register"
         android:id="@+id/RegisterButton"
         android:textAllCaps="false"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/PhoneInput"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/EmailInput"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton"

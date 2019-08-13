@@ -1,5 +1,6 @@
 package com.project.weardrop.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kakao.auth.AccessTokenCallback;
@@ -53,12 +55,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean saveLoginData;
     RelativeLayout layout;
-    EditText editid, editpwd, email, userid, writer;
+    EditText editid, editpwd, email, userid, writer, find_id, find_eamil;
     Button btnLogin, btnsign;
     Button KaKaoButton, NaverButton;
     LoginButton KaKaoButtonLogin;
 
     SessionCallback callback;
+
+    TextView findid, findpw;
 
     private CheckBox checkBox;
     private String id;
@@ -75,8 +79,6 @@ public class LoginActivity extends AppCompatActivity {
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         load();
-
-
 
         KaKaoButtonLogin = (LoginButton) findViewById(R.id.KaKaoButtonLogin);
         KaKaoButtonLogin.setVisibility(View.GONE);
@@ -106,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.loginButton);
         btnsign = (Button) findViewById(R.id.signupButton);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+
         email = (EditText) findViewById(R.id.email);
         email.setVisibility(View.GONE);
         writer = (EditText) findViewById(R.id.writer);
@@ -113,6 +116,11 @@ public class LoginActivity extends AppCompatActivity {
         userid = (EditText) findViewById(R.id.userid);
         userid.setVisibility(View.GONE);
 
+        find_id = (EditText) findViewById(R.id.find_id);
+        find_id.setVisibility(View.GONE);
+
+        find_eamil = (EditText) findViewById(R.id.find_email);
+        find_eamil.setVisibility(View.GONE);
 
         // 비밀번호 타입 *으로 보여지게 처리
         editpwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -124,6 +132,82 @@ public class LoginActivity extends AppCompatActivity {
         editpwd.setTypeface(typeface);
         btnLogin.setTypeface(typeface);
         btnsign.setTypeface(typeface);
+
+        findid = findViewById(R.id.findid);
+        findpw = findViewById(R.id.findpw);
+
+        findid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View dialogView = getLayoutInflater().inflate(R.layout.findid_dialog, null);
+                final EditText et = (EditText)dialogView.findViewById(R.id.findemail);
+                AlertDialog.Builder fid = new AlertDialog.Builder(LoginActivity.this);
+                fid.setView(dialogView);
+
+                fid.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Text 값 받아서 로그 남기기
+                        String email = et.getText().toString();
+
+                        find_eamil.setText(email);
+
+                        Thread4 th = new Thread4();
+                        th.start();
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+
+                fid.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+                fid.show();
+            }
+        });
+
+        findpw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View dialogView = getLayoutInflater().inflate(R.layout.findpw_dialog, null);
+                final EditText et = (EditText)dialogView.findViewById(R.id.findid);
+                final EditText et2 = (EditText)dialogView.findViewById(R.id.findemail);
+                AlertDialog.Builder fpw = new AlertDialog.Builder(LoginActivity.this);
+                fpw.setView(dialogView);
+
+                fpw.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Text 값 받아서 로그 남기기
+                        String userid = et.getText().toString();
+                        String email = et2.getText().toString();
+
+                        find_id.setText(userid);
+                        find_eamil.setText(email);
+
+                        Thread5 th = new Thread5();
+                        th.start();
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+
+                fpw.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+                fpw.show();
+            }
+        });
 
         // 로그인 정보 저장
         if (saveLoginData) {
@@ -346,9 +430,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String writer = Object.getString("writer");
                                 String userpw = Object.getString("userpw");
                                 String email = Object.getString("email");
-                                String phone = Object.getString("phone");
                                 String admin = Object.getString("admin");
-                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, phone, admin);
+                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, admin);
                                 intent.putExtra("dto", dto);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -453,9 +536,8 @@ public class LoginActivity extends AppCompatActivity {
                                 String writer = Object.getString("writer");
                                 String userpw = Object.getString("userpw");
                                 String email = Object.getString("email");
-                                String phone = Object.getString("phone");
                                 String admin = Object.getString("admin");
-                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, phone, admin);
+                                MemberDTO dto = new MemberDTO(userid, writer, userpw, email, admin);
                                 intent.putExtra("dto", dto);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -474,4 +556,87 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+    class Thread4 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/android_userid_find";
+            String email = find_eamil.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("email", email));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                final JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message != null) {
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                         } else {
+                            Toast.makeText(getApplicationContext(), "이메일을 찾을수 없습니다. 회원가입을 해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class Thread5 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/android_userpw_find";
+            String userid = find_id.getText().toString();
+            String email = find_eamil.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("userid", userid));
+                postData.add(new BasicNameValuePair("email", email));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                final JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message != null) {
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "비밀번호를 찾을 수 없습니다. 값을 잘못 입력하셨는지 확인해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

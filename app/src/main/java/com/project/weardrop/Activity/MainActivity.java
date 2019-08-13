@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         tx2.setText("닉네임 : " + dto.getWriter());
         tx3.setText("비밀번호 : " + dto.getUserpw());
         tx4.setText("이메일 : " + dto.getEmail());
-        tx5.setText("핸드폰번호 : " + dto.getPhone());
         tx6.setText("관리자권한 : " + dto.getAdmin());
 
         */

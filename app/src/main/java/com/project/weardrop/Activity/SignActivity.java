@@ -1,5 +1,6 @@
 package com.project.weardrop.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,12 +12,14 @@ import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.weardrop.R;
@@ -36,8 +39,8 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class SignActivity extends AppCompatActivity {
-    EditText editid, editpw, editnickname, editpw_chack, edit_email, edit_phone;
-    Button register, duplicate;
+    EditText editid, editpw, editnickname, editpw_chack, edit_email;
+    Button register, duplicate, terms_button;
     RelativeLayout layout;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -56,9 +59,10 @@ public class SignActivity extends AppCompatActivity {
         editpw = (EditText)findViewById(R.id.passwordInput);
         editpw_chack = (EditText)findViewById(R.id.passwordCheckInput);
         edit_email = (EditText)findViewById(R.id.EmailInput);
-        edit_phone = (EditText)findViewById(R.id.PhoneInput);
         register = (Button)findViewById(R.id.RegisterButton);
         duplicate = (Button)findViewById(R.id.UseridDuplicate);
+        final CheckBox terms = (CheckBox)findViewById(R.id.terms);
+        terms_button = (Button)findViewById(R.id.termsbutton);
 
         // 비밀번호 타입 *으로 보여지게 처리
         editpw.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
@@ -73,7 +77,6 @@ public class SignActivity extends AppCompatActivity {
         editpw.setTypeface(typeface);
         editpw_chack.setTypeface(typeface);
         edit_email.setTypeface(typeface);
-        edit_phone.setTypeface(typeface);
 
         // 비밀번호 체크가 비밀번호와 같으면 초록색, 다르면 빨간색
         editpw_chack.addTextChangedListener(new TextWatcher() {
@@ -99,11 +102,40 @@ public class SignActivity extends AppCompatActivity {
             }
         });
 
+
+        // 중복검사 버튼을 누르면
         duplicate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if ( editid.getText().toString().trim().length() == 0 ) {
+                    Toast.makeText(SignActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
+                    editid.setText("");
+                    editid.requestFocus();
+                    return;
+                }
+
                 Thread2 th2 = new Thread2();
                 th2.start();
+            }
+        });
+
+        // 약관확인 버튼을 누르면
+        terms_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View dialogView = getLayoutInflater().inflate(R.layout.trems_layout, null);
+                AlertDialog.Builder fpw = new AlertDialog.Builder(SignActivity.this);
+                fpw.setView(dialogView);
+
+                fpw.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+                fpw.show();
             }
         });
 
@@ -112,6 +144,10 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if( terms.isChecked() == false) {
+                    Toast.makeText(SignActivity.this, "약관에 동의해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // 유효성 검사
                 if ( editid.getText().toString().trim().length() == 0 ) {
                     Toast.makeText(SignActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
@@ -206,20 +242,6 @@ public class SignActivity extends AppCompatActivity {
                     return;
                 }
 
-                if ( edit_phone.getText().toString().length() == 0 ) {
-                    Toast.makeText(SignActivity.this, "핸드폰번호를 입력하세요", Toast.LENGTH_SHORT).show();
-                    edit_phone.setText("");
-                    edit_phone.requestFocus();
-                    return;
-                }
-
-                // 핸드폰번호 정규식
-                if(!Pattern.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", edit_phone.getText().toString())) {
-                    Toast.makeText(SignActivity.this, "올바른 핸드폰 번호가 아닙니다.", Toast.LENGTH_SHORT).show();
-                    edit_phone.setText("");
-                    edit_phone.requestFocus();
-                    return;
-                }
 
                 // 아이디 중복체크를 한번 더해서, 중복나면 리턴하게.
                 Thread2 th2 = new Thread2();
@@ -241,7 +263,6 @@ public class SignActivity extends AppCompatActivity {
             String writer = editnickname.getText().toString();
             String userpw = editpw.getText().toString();
             String email = edit_email.getText().toString();
-            String phone = edit_phone.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
                 HttpClient http = new DefaultHttpClient();
@@ -251,7 +272,6 @@ public class SignActivity extends AppCompatActivity {
                 postData.add(new BasicNameValuePair("writer", writer));
                 postData.add(new BasicNameValuePair("userpw", userpw));
                 postData.add(new BasicNameValuePair("email", email));
-                postData.add(new BasicNameValuePair("phone", phone));
                 // URI encoding이 필요한 한글, 특수문자 값들 인코딩
                 UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
                 HttpPost httpPost = new HttpPost(url);

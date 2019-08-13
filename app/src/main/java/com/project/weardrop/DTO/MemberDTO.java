@@ -3,16 +3,15 @@ package com.project.weardrop.DTO;
 import java.io.Serializable;
 
 public class MemberDTO  implements Serializable {
-    String userid, writer, userpw, email, phone, admin;
+    String userid, writer, userpw, email, admin;
 
     public MemberDTO() {}
 
-    public MemberDTO(String userid, String writer, String userpw, String email, String phone, String admin) {
+    public MemberDTO(String userid, String writer, String userpw, String email, String admin) {
         this.userid = userid;
         this.writer = writer;
         this.userpw = userpw;
         this.email = email;
-        this.phone = phone;
         this.admin = admin;
     }
 
@@ -57,14 +56,6 @@ public class MemberDTO  implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getAdmin() {

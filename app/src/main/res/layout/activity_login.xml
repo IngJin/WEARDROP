@@ -39,6 +39,42 @@
         android:layout_marginLeft="30dp"
         android:textColor="#ffffff"
         android:fontFamily="@font/nanumgothic"/>
+
+    <LinearLayout
+        android:id="@+id/find"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordInput"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/findid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothic"
+            android:textColor="#ffffff"
+            android:text="아이디 찾기"
+            android:textSize="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nanumgothic"
+            android:text=" / "
+            android:textColor="#ffffff"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/findpw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumgothic"
+            android:textColor="#ffffff"
+            android:textSize="10dp"
+            android:text="비밀번호 찾기" />
+    </LinearLayout>
+
     <Button
         android:layout_width="140dp"
         android:layout_height="50dp"
@@ -46,7 +82,7 @@
         android:id="@+id/loginButton"
         android:textAllCaps="false"
         android:layout_marginTop="40dp"
-        android:layout_below="@+id/passwordInput"
+        android:layout_below="@+id/find"
         android:layout_toStartOf="@+id/signupButton"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton"
@@ -110,5 +146,19 @@
         android:id="@+id/writer"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find_id"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find_email"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+
 
 </RelativeLayout>
