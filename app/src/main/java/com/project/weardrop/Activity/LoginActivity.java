@@ -478,7 +478,7 @@ public class LoginActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (message.equals("email")) { // 중복이면
+                        if (message.equals("이메일이 중복됩니다.")) { // 중복이면
                             // dto로 다시호출해서 값을 가져오고
                             Thread3 th3 = new Thread3();
                             th3.start();

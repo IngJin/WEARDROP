@@ -31,10 +31,10 @@
 
     <Button
         android:id="@+id/UseridDuplicate"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_alignRight="@+id/UseridInput"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="104dp"
         android:fontFamily="@font/nanumgothic"
         android:text="Duplicate"
         android:textColor="#ffffff"
@@ -87,6 +87,19 @@
         android:layout_below="@+id/passwordCheckInput"
         android:fontFamily="@font/raleway_thin"/>
 
+    <Button
+        android:id="@+id/EmailDuplicate"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@+id/EmailInput"
+        android:layout_marginTop="304dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="Duplicate"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:textAllCaps="false" />
+
+
     <CheckBox
         android:id="@+id/terms"
         android:text="본 서비스 이용 약관에 동의합니다."
@@ -106,7 +119,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/EmailInput"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="260dp"
+        android:layout_marginLeft="258dp"
         android:background="@drawable/mybutton"
         android:fontFamily="@font/nanumgothic"
         android:text="Terms"
@@ -119,11 +132,15 @@
         android:text="Register"
         android:id="@+id/RegisterButton"
         android:textAllCaps="false"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="110dp"
         android:layout_below="@+id/EmailInput"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton"
         android:fontFamily="@font/nanumgothic"/>
 
+    <TextView
+        android:id="@+id/checkvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

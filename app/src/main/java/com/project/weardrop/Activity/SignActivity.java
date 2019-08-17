@@ -40,8 +40,9 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class SignActivity extends AppCompatActivity {
     EditText editid, editpw, editnickname, editpw_chack, edit_email;
-    Button register, duplicate, terms_button;
+    Button register, duplicate, duplicate_email, terms_button;
     RelativeLayout layout;
+    TextView checkvalue;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -61,8 +62,11 @@ public class SignActivity extends AppCompatActivity {
         edit_email = (EditText)findViewById(R.id.EmailInput);
         register = (Button)findViewById(R.id.RegisterButton);
         duplicate = (Button)findViewById(R.id.UseridDuplicate);
+        duplicate_email = (Button)findViewById(R.id.EmailDuplicate);
         final CheckBox terms = (CheckBox)findViewById(R.id.terms);
         terms_button = (Button)findViewById(R.id.termsbutton);
+        checkvalue = (TextView)findViewById(R.id.checkvalue);
+        checkvalue.setVisibility(View.GONE);
 
         // 비밀번호 타입 *으로 보여지게 처리
         editpw.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
@@ -103,7 +107,7 @@ public class SignActivity extends AppCompatActivity {
         });
 
 
-        // 중복검사 버튼을 누르면
+        // 아이디 중복검사 버튼을 누르면
         duplicate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,6 +121,23 @@ public class SignActivity extends AppCompatActivity {
 
                 Thread2 th2 = new Thread2();
                 th2.start();
+            }
+        });
+
+        // 이메일 중복검사 버튼을 누르면
+        duplicate_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if ( edit_email.getText().toString().trim().length() == 0 ) {
+                    Toast.makeText(SignActivity.this, "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
+                    edit_email.setText("");
+                    edit_email.requestFocus();
+                    return;
+                }
+
+                Thread3 th3 = new Thread3();
+                th3.start();
             }
         });
 
@@ -143,6 +164,19 @@ public class SignActivity extends AppCompatActivity {
         register.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // 아이디 중복체크를 한번 더해서, 중복나면 리턴하게.
+                Thread2 th2 = new Thread2();
+                th2.start();
+
+                // 이메일 중복체크를 한번 더해서, 중복나면 리턴하게.
+                Thread3 th3 = new Thread3();
+                th3.start();
+
+                if(checkvalue.getText().toString() != "") {
+                    return;
+                }
+                System.out.println(checkvalue.getText().toString());
 
                 if( terms.isChecked() == false) {
                     Toast.makeText(SignActivity.this, "약관에 동의해주세요", Toast.LENGTH_SHORT).show();
@@ -242,11 +276,6 @@ public class SignActivity extends AppCompatActivity {
                     return;
                 }
 
-
-                // 아이디 중복체크를 한번 더해서, 중복나면 리턴하게.
-                Thread2 th2 = new Thread2();
-                th2.start();
-
                 // 서버(DB) 스프링 통신
                 Thread1 th1 = new Thread1();
                 th1.start();
@@ -331,8 +360,61 @@ public class SignActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(message != null) {
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                            return;
+                            if(message.equals("아이디가 중복됩니다.")) {
+                                checkvalue.setText("id");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                checkvalue.setText("");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // 이메일 중복검사 서버통신
+    class Thread3 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/email_check_android";
+            String email = edit_email.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("email", email));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(message != null) {
+                            if(message.equals("이메일 사용이 가능합니다.")) {
+                                checkvalue.setText("");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                            } else {
+                                checkvalue.setText("email");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                         }
                     }
 
