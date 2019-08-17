@@ -27,7 +27,7 @@
 - <b>OS</b> : `Windows 7 Professional K `  
 - <b>Tool</b> : `Eclipse Photon (4.8)`, `Android Studio(3.4.2) Pie`
 - <b>DataBase</b> : `Oracle Database 11g Express Edition`  
-- <b>Library</b> : `Spring 3.2.2.RELEASE`, `Mybatis 3.4.6`  
+- <b>Library</b> : `Spring 3.1.1.RELEASE`, `Mybatis 3.4.6`  
 
 
 ### 프로젝트 기간(전체)
@@ -67,4 +67,10 @@
 ```
 + 카카오톡 - 메인 DB 로그인 정보 자동 매칭 기능 추가.
 ```
+
+## 190813  
+```
++ 약관 확인, 아이디 / 비밀번호 찾기, 회원가입 아이디 중복체크 확인 기능 추가.
+```
+
 
