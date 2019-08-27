@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -723,14 +722,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (Email != null) {
                     Thread2 th2 = new Thread2();
                     th2.start();
+                    forceLogout();
 
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     MemberDTO dto = new MemberDTO(user_id, writers);
                     intent.putExtra("dto", dto);
                     startActivity(intent);
+                    forceLogout();
+                    finish();
                 }
-
 
                 } catch (Exception e){
                 e.printStackTrace();
