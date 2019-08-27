@@ -1,5 +1,6 @@
 package com.project.weardrop.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.nhn.android.naverlogin.OAuthLogin;
 import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
@@ -26,12 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
     public String NICKNAME;
     public String EMAIL;
+    static Context mContext;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         layout = findViewById(R.id.mainlayout);
         layout.setBackgroundResource(R.drawable.main_layout);
@@ -64,6 +69,16 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        button1 = findViewById(R.id.mypage);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         button2 = findViewById(R.id.weather);
         button2.setOnClickListener(new View.OnClickListener() {
@@ -127,3 +142,5 @@ public class MainActivity extends AppCompatActivity {
         */
     }
 }
+
+

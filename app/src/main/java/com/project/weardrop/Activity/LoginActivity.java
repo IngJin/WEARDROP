@@ -1,11 +1,14 @@
 package com.project.weardrop.Activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -32,6 +35,9 @@ import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.exception.KakaoException;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
@@ -57,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout layout;
     EditText editid, editpwd, email, userid, writer, find_id, find_eamil;
     Button btnLogin, btnsign;
-    Button KaKaoButton, NaverButton;
+    Button KaKaoButton;
     LoginButton KaKaoButtonLogin;
 
     SessionCallback callback;
@@ -71,6 +77,15 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences appData;
     private String TAG = "LoginActivity";
 
+    private OAuthLoginButton naverLogInButton;
+    private static OAuthLogin naverLoginInstance;
+
+    static final String CLIENT_ID = "FvUsJAIvW7W2TjTyHugl";
+    static final String CLIENT_SECRET = "3G8fzOvfNo";
+    static final String CLIENT_NAME = "네이버 아이디로 로그인 테스트";
+
+    static Context context;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
         KaKaoButtonLogin = (LoginButton) findViewById(R.id.KaKaoButtonLogin);
         KaKaoButtonLogin.setVisibility(View.GONE);
+
 
         KaKaoButton = (Button) findViewById(R.id.KaKaoButton);
         KaKaoButton.setOnClickListener(new View.OnClickListener() {
@@ -98,9 +114,6 @@ public class LoginActivity extends AppCompatActivity {
         // 버튼 이미지
         KaKaoButton = findViewById(R.id.KaKaoButton);
         KaKaoButton.setBackgroundResource(R.drawable.kakao);
-
-        NaverButton = findViewById(R.id.NaverButton);
-        NaverButton.setBackgroundResource(R.drawable.naver);
 
         // id 값 지정
         editid = (EditText) findViewById(R.id.UseridInput);
@@ -136,11 +149,14 @@ public class LoginActivity extends AppCompatActivity {
         findid = findViewById(R.id.findid);
         findpw = findViewById(R.id.findpw);
 
+        init();
+        init_View();
+
         findid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 View dialogView = getLayoutInflater().inflate(R.layout.findid_dialog, null);
-                final EditText et = (EditText)dialogView.findViewById(R.id.findemail);
+                final EditText et = (EditText) dialogView.findViewById(R.id.findemail);
                 AlertDialog.Builder fid = new AlertDialog.Builder(LoginActivity.this);
                 fid.setView(dialogView);
 
@@ -175,8 +191,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 View dialogView = getLayoutInflater().inflate(R.layout.findpw_dialog, null);
-                final EditText et = (EditText)dialogView.findViewById(R.id.findid);
-                final EditText et2 = (EditText)dialogView.findViewById(R.id.findemail);
+                final EditText et = (EditText) dialogView.findViewById(R.id.findid);
+                final EditText et2 = (EditText) dialogView.findViewById(R.id.findemail);
                 AlertDialog.Builder fpw = new AlertDialog.Builder(LoginActivity.this);
                 fpw.setView(dialogView);
 
@@ -248,9 +264,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
 
     // 설정값을 저장하는 함수
     private void save() {
@@ -275,6 +289,7 @@ public class LoginActivity extends AppCompatActivity {
         id = appData.getString("ID", "");
         pwd = appData.getString("PWD", "");
     }
+
 
     /**
      * 카카오톡
@@ -392,6 +407,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+
     class Thread1 extends Thread {
         @Override
         public void run() {
@@ -478,7 +494,7 @@ public class LoginActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (message.equals("이메일이 중복됩니다.")) { // 중복이면
+                        if (message.equals("이미 사용중인 이메일입니다.")) { // 중복이면
                             // dto로 다시호출해서 값을 가져오고
                             Thread3 th3 = new Thread3();
                             th3.start();
@@ -556,6 +572,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
     class Thread4 extends Thread {
         @Override
         public void run() {
@@ -585,7 +602,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         if (message != null) {
                             Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                         } else {
+                        } else {
                             Toast.makeText(getApplicationContext(), "이메일을 찾을수 없습니다. 회원가입을 해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -638,5 +655,87 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+    //초기화
+    private void init(){
+        context = this;
+        naverLoginInstance = OAuthLogin.getInstance();
+        naverLoginInstance.init(this,CLIENT_ID,CLIENT_SECRET,CLIENT_NAME);
+    }
+    //변수 붙이기
+    private void init_View(){
+        naverLogInButton = (OAuthLoginButton)findViewById(R.id.buttonNaverLogin);
 
+        //로그인 핸들러
+        OAuthLoginHandler naverLoginHandler  = new OAuthLoginHandler() {
+            @Override
+            public void run(boolean success) {
+                if (success) {//로그인 성공
+                    new RequestApiTask().execute();
+                } else {//로그인 실패
+                    String errorCode = naverLoginInstance.getLastErrorCode(context).getCode();
+                    String errorDesc = naverLoginInstance.getLastErrorDesc(context);
+                    Toast.makeText(context, "errorCode:" + errorCode + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        };
+
+        naverLogInButton.setOAuthLoginHandler(naverLoginHandler);
+
+    }
+
+    // 로그아웃 처리(토큰도 함께 삭제)
+    public void forceLogout() {
+        // 스레드로 돌려야 한다. 안 그러면 로그아웃 처리가 안되고 false를 반환한다.
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                naverLoginInstance.logoutAndDeleteToken(context);
+            }
+        }).start();
+    }
+
+    private class RequestApiTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {//작업이 실행되기 전에 먼저 실행.
+            email.setText((String) "");//메일 란 비우기
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {//네트워크에 연결하는 과정이 있으므로 다른 스레드에서 실행되어야 한다.
+            String url = "https://openapi.naver.com/v1/nid/me";
+            String at = naverLoginInstance.getAccessToken(context);
+            return naverLoginInstance.requestApi(context, at, url);//url, 토큰을 넘겨서 값을 받아온다.json 타입으로 받아진다.
+        }
+
+        protected void onPostExecute(String content) {//doInBackground 에서 리턴된 값이 여기로 들어온다.
+            try {
+                JSONObject jsonObject = new JSONObject(content);
+                JSONObject response = jsonObject.getJSONObject("response");
+                String user_id = response.getString("id");
+                String writers = response.getString("nickname");
+                String Email = response.getString("email");
+
+                userid.setText(user_id);
+                writer.setText(writers);
+                email.setText(Email);
+
+                if (Email != null) {
+                    Thread2 th2 = new Thread2();
+                    th2.start();
+
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    MemberDTO dto = new MemberDTO(user_id, writers);
+                    intent.putExtra("dto", dto);
+                    startActivity(intent);
+                }
+
+
+                } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
+

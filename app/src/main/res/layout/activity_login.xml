@@ -108,6 +108,15 @@
         android:id="@+id/KaKaoButtonLogin"
         />
 
+
+    <com.nhn.android.naverlogin.ui.view.OAuthLoginButton
+        android:id="@+id/buttonNaverLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/KaKaoButton"
+        android:layout_centerInParent="true"/>
+
     <Button
         android:id="@+id/KaKaoButton"
         android:layout_width="250dp"
@@ -116,15 +125,6 @@
         android:layout_below="@+id/loginButton"
         android:layout_centerInParent="true"
         android:background="@drawable/kakao"/>
-
-    <Button
-        android:id="@+id/NaverButton"
-        android:layout_width="228dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/KaKaoButton"
-        android:layout_centerInParent="true"/>
-
 
     <EditText
         android:layout_width="wrap_content"
@@ -159,6 +159,5 @@
         android:id="@+id/find_email"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"/>
-
 
 </RelativeLayout>

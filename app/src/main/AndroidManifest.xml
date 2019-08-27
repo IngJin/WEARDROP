@@ -14,30 +14,29 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
+        android:name=".Other.App"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="TeamProject"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="com.project.weardrop.Other.App">
-
-
-        <activity android:name=".Activity.SecondSubAddActivity"/>
-        <activity android:name=".Activity.SecondSubActivity"/>
-        <activity android:name=".Activity.SecondDetailActivity"/>
-        <activity android:name=".Activity.SecondActivity"/>
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activity.MypageActivity"></activity>
+        <activity android:name=".Activity.SecondSubAddActivity" />
+        <activity android:name=".Activity.SecondSubActivity" />
+        <activity android:name=".Activity.SecondDetailActivity" />
+        <activity android:name=".Activity.SecondActivity" />
         <activity android:name=".Activity.MapActivity" />
         <activity android:name=".Activity.SaleActivity" />
         <activity android:name=".Activity.HugiActivity" />
         <activity android:name=".Activity.BoardwriteActivity" />
         <activity android:name=".Activity.FreedetailActivity" />
         <activity android:name=".Activity.FreeActivity" />
-        <activity android:name=".Activity.GalleryDetailActivity"></activity>
-        <activity android:name=".Activity.GalleryActivity"/>
-        <activity android:name=".Activity.NoticeActivity"/>
-        <activity android:name=".Activity.NoticeDetailActivity"/>
-        <activity android:name=".Activity.WeatherActivity"/>
+        <activity android:name=".Activity.GalleryDetailActivity" />
+        <activity android:name=".Activity.GalleryActivity" />
+        <activity android:name=".Activity.NoticeActivity" />
+        <activity android:name=".Activity.NoticeDetailActivity" />
+        <activity android:name=".Activity.WeatherActivity" />
         <activity android:name=".Activity.SignActivity" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.LoginActivity" />
@@ -48,10 +47,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
     </application>
-
 
 </manifest>
