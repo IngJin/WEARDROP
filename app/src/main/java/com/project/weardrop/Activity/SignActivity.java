@@ -50,7 +50,6 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
 
-
         layout = findViewById(R.id.Layout2);
         layout.setBackgroundResource(R.drawable.background);
 
@@ -128,7 +127,6 @@ public class SignActivity extends AppCompatActivity {
         duplicate_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if ( edit_email.getText().toString().trim().length() == 0 ) {
                     Toast.makeText(SignActivity.this, "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
                     edit_email.setText("");

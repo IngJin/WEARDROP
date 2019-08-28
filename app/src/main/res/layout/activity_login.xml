@@ -150,6 +150,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/userpw"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/find_id"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"/>

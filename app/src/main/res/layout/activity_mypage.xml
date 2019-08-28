@@ -1,9 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.project.weardrop.Activity.MypageActivity">
+    tools:context=".Activity.SignActivity"
+    android:id="@+id/Layout3">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signtext"
+        android:text="회원정보 수정"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120px"
+        android:fontFamily="@font/raleway_thin"
+        android:textSize="25dp"
+        android:textColor="#ffffff"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/mypageNickInput"
+        android:layout_centerHorizontal="true"
+        android:hint="mypageNickname"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/raleway_thin"/>
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/mypagepassword"
+        android:layout_centerHorizontal="true"
+        android:hint="Password"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/mypageNickInput"
+        android:inputType="textPassword"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <Button
+        android:id="@+id/mypagePWView"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@+id/mypagepassword"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="View"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:textAllCaps="false" />
+
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/mypagepasswordCheckInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Password_Check"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/mypagepassword"
+        android:inputType="textPassword"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/mypageEmailInput"
+        android:layout_centerHorizontal="true"
+        android:hint="Email"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/mypagepasswordCheckInput"
+        android:fontFamily="@font/raleway_thin"/>
+
+    <Button
+        android:id="@+id/mypageEmailDuplicate"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignRight="@+id/mypageEmailInput"
+        android:layout_marginTop="250dp"
+        android:fontFamily="@font/nanumgothic"
+        android:text="Duplicate"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:textAllCaps="false" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="Modified"
+        android:id="@+id/mypagemodifedButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/mypageEmailInput"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:fontFamily="@font/nanumgothic"/>
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="Secession"
+        android:id="@+id/mypagedeleteButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/mypagemodifedButton"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+
+        android:fontFamily="@font/nanumgothic"/>
+
+    <TextView
+        android:id="@+id/mypagecheckvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/mypageEditid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

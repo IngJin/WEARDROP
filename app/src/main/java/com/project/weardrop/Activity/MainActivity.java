@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         NICKNAME = intent.getStringExtra("name");
         EMAIL = intent.getStringExtra("email");
-        MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         TextView tx1 = (TextView) findViewById(R.id.NickName);
         tx1.setTypeface(typeface);
@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 

@@ -20,6 +20,7 @@ public class MemberDTO  implements Serializable {
         this.writer = writer;
         this.email = email;
     }
+
     public MemberDTO(String userid, String writer) {
         this.userid = userid;
         this.writer = writer;

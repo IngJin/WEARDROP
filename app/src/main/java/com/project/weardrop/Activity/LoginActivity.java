@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean saveLoginData;
     RelativeLayout layout;
-    EditText editid, editpwd, email, userid, writer, find_id, find_eamil;
+    EditText editid, editpwd, email, userid, writer, userpw, find_id, find_eamil;
     Button btnLogin, btnsign;
     Button KaKaoButton;
     LoginButton KaKaoButtonLogin;
@@ -127,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
         writer.setVisibility(View.GONE);
         userid = (EditText) findViewById(R.id.userid);
         userid.setVisibility(View.GONE);
+        userpw = (EditText) findViewById(R.id.userpw);
+        userpw.setVisibility(View.GONE);
 
         find_id = (EditText) findViewById(R.id.find_id);
         find_id.setVisibility(View.GONE);
@@ -211,7 +213,6 @@ public class LoginActivity extends AppCompatActivity {
                         // Event
                     }
                 });
-
 
                 fpw.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -377,7 +378,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
@@ -452,6 +452,7 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "환영합니다.", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show();
@@ -501,10 +502,15 @@ public class LoginActivity extends AppCompatActivity {
                             String userId = userid.getText().toString();
                             String Writer = writer.getText().toString();
                             String Email = email.getText().toString();
+                            String userPw = randomValue(10);
+                            String admin = "N";
+                            userpw.setText(userPw);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            MemberDTO dto = new MemberDTO(userId, Writer, Email);
+                            MemberDTO dto = new MemberDTO(userId, Writer, userPw, Email, admin);
                             intent.putExtra("dto", dto);
                             startActivity(intent);
+                            Thread6 th = new Thread6();
+                            th.start();
                             finish();
                         }
                     }
@@ -513,6 +519,17 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    // 랜덤 비밀번호 생성기(10자리)
+    public static String randomValue(int cnt) {
+        StringBuffer strPwd = new StringBuffer();
+        char str[] = new char[1];
+        for (int i = 0; i < cnt; i++) {
+            str[0] = (char) ((Math.random() * 94) + 33);
+            strPwd.append(str);
+        }
+        return strPwd.toString();
     }
 
     class Thread3 extends Thread {
@@ -558,6 +575,7 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "환영합니다.", Toast.LENGTH_SHORT).show();
                             finish();
                             return;
                         } else {
@@ -654,18 +672,64 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    class Thread6 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://192.168.0.67:80/iot/sign_android";
+            String userId = userid.getText().toString();
+            String Writer = writer.getText().toString();
+            String userPw = userpw.getText().toString();
+            String Email = email.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("userid", userId));
+                postData.add(new BasicNameValuePair("writer", Writer));
+                postData.add(new BasicNameValuePair("userpw", userPw));
+                postData.add(new BasicNameValuePair("email", Email));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(message != null) {
+                          Toast.makeText(getApplicationContext(), "환영합니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //초기화
-    private void init(){
+    private void init() {
         context = this;
         naverLoginInstance = OAuthLogin.getInstance();
-        naverLoginInstance.init(this,CLIENT_ID,CLIENT_SECRET,CLIENT_NAME);
+        naverLoginInstance.init(this, CLIENT_ID, CLIENT_SECRET, CLIENT_NAME);
     }
+
     //변수 붙이기
-    private void init_View(){
-        naverLogInButton = (OAuthLoginButton)findViewById(R.id.buttonNaverLogin);
+    private void init_View() {
+        naverLogInButton = (OAuthLoginButton) findViewById(R.id.buttonNaverLogin);
 
         //로그인 핸들러
-        OAuthLoginHandler naverLoginHandler  = new OAuthLoginHandler() {
+        OAuthLoginHandler naverLoginHandler = new OAuthLoginHandler() {
             @Override
             public void run(boolean success) {
                 if (success) {//로그인 성공
@@ -733,10 +797,9 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 }
 
-                } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 }
-
