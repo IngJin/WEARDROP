@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_main"
+    android:orientation="vertical"
+    tools:context=".Activity.Map2Activity">
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        tools:context=".MapsActivity" />
+    <Button
+        android:text="장소검색"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:id="@+id/button"/>
+</LinearLayout>

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     RelativeLayout layout;
     Button button1, button2, button3, button4, button5, button6;
-    ImageButton logout;
+    ImageButton logout, map;
 
     public String NICKNAME;
     public String EMAIL;
@@ -53,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         tx1.setTypeface(typeface);
 
         tx1.setText(dto.getWriter());
+
+        map = findViewById(R.id.map);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Map2Activity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
