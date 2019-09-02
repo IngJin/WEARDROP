@@ -102,7 +102,7 @@ public class MapActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_map);
 
-        // bottom) 버튼 클릭시 사용되는 리스너를 구현
+        // bottom 버튼 클릭시 사용되는 리스너를 구현
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -113,14 +113,9 @@ public class MapActivity extends AppCompatActivity
                             case R.id.menuitem_bottombar_home:
                                 Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
                                 return true;
-
-                            case R.id.menuitem_bottombar_write:
-                                Intent intent = new Intent(MapActivity.this, BoardwriteActivity.class);
-                                startActivity(intent);
-                                return true;
-
                             case R.id.menuitem_bottombar_search:
                                 Toast.makeText(getApplicationContext(), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
+                                showPlaceInformation(currentPosition);
                                 return true;
                         }
                         return false;
@@ -160,14 +155,6 @@ public class MapActivity extends AppCompatActivity
 
 
         previous_marker = new ArrayList<Marker>();
-
-        Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPlaceInformation(currentPosition);
-            }
-        });
 
         mLayout = findViewById(R.id.layout_main);
 
