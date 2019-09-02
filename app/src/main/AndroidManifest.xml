@@ -24,13 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".Activity.Map2Activity"></activity>
+        <activity android:name=".Activity.MapActivity"></activity>
         <activity android:name=".Activity.MypageActivity" />
         <activity android:name=".Activity.SecondSubAddActivity" />
         <activity android:name=".Activity.SecondSubActivity" />
         <activity android:name=".Activity.SecondDetailActivity" />
         <activity android:name=".Activity.SecondActivity" />
-        <activity android:name=".Activity.MapActivity" />
         <activity android:name=".Activity.SaleActivity" />
         <activity android:name=".Activity.HugiActivity" />
         <activity android:name=".Activity.BoardwriteActivity" />
