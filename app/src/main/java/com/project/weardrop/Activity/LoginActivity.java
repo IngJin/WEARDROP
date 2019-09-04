@@ -410,7 +410,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread1 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/login_android";
+            String url = "http://192.168.0.67:80/team3/login_android";
             String userid = editid.getText().toString();
             String userpw = editpwd.getText().toString();
             try {
@@ -470,7 +470,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread2 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/email_check_android";
+            String url = "http://192.168.0.67:80/team3/email_check_android";
             String email_thread2 = email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -535,7 +535,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread3 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/email_login_android";
+            String url = "http://192.168.0.67:80/team3/email_login_android";
             String email_Thread3 = email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -593,7 +593,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread4 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/android_userid_find";
+            String url = "http://192.168.0.67:80/team3/android_userid_find";
             String email = find_eamil.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -634,7 +634,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread5 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/android_userpw_find";
+            String url = "http://192.168.0.67:80/team3/android_userpw_find";
             String userid = find_id.getText().toString();
             String email = find_eamil.getText().toString();
             try {
@@ -676,7 +676,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread6 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/iot/sign_android";
+            String url = "http://192.168.0.67:80/team3/sign_android";
             String userId = userid.getText().toString();
             String Writer = writer.getText().toString();
             String userPw = userpw.getText().toString();

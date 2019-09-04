@@ -8,17 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.weardrop.R;
 
-public class NoticeDetailActivity extends AppCompatActivity {
+public class CenterDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activty_noticedetail);
+        setContentView(R.layout.activty_centerdetail);
         Intent intent = getIntent();
 
         String title = intent.getStringExtra("title");
         String writer = intent.getStringExtra("writer");
-        String writedate = intent.getStringExtra("writedate");
         String content = intent.getStringExtra("content");
 
         TextView textView1 = findViewById(R.id.textView1);
@@ -27,8 +26,6 @@ public class NoticeDetailActivity extends AppCompatActivity {
         textView2.setText(writer);
         TextView textView3 = findViewById(R.id.textView3);
         textView3.setText(content);
-        TextView textDate = findViewById(R.id.textDate);
-        textDate.setText(writedate);
 
     }
 }

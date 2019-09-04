@@ -29,7 +29,6 @@ public class NoticeDetailAdapter extends RecyclerView.Adapter<NoticeDetailAdapte
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
         // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
         // return 인자는 ViewHolder 입니다.
 
@@ -64,6 +63,7 @@ public class NoticeDetailAdapter extends RecyclerView.Adapter<NoticeDetailAdapte
         private String title;
         private String writer;
         private String content;
+        private String writedate;
         private NoticeDTO data;
 
         ItemViewHolder(View itemView){
@@ -79,6 +79,7 @@ public class NoticeDetailAdapter extends RecyclerView.Adapter<NoticeDetailAdapte
             title = data.getTitle();
             writer = data.getWriter();
             content = data.getContent();
+            writedate = data.getWritedate();
             itemView.setOnClickListener(this);
         }
 
@@ -89,6 +90,7 @@ public class NoticeDetailAdapter extends RecyclerView.Adapter<NoticeDetailAdapte
             intent.putExtra("title", title);
             intent.putExtra("writer", writer);
             intent.putExtra("content", content);
+            intent.putExtra("writedate", writedate);
             v.getContext().startActivity(intent);
         }
     }

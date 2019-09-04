@@ -123,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 /*

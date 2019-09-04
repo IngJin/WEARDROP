@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.DTO.NoticeDTO;
+import com.project.weardrop.Other.CenterAdapter;
 import com.project.weardrop.Other.NoticeAdapter;
 import com.project.weardrop.R;
 
@@ -24,7 +24,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
@@ -32,14 +31,14 @@ import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
-public class NoticeActivity extends AppCompatActivity implements Runnable {
+public class CenterActivity extends AppCompatActivity implements Runnable {
 
-    private NoticeAdapter adapter;
+    private CenterAdapter adapter;
     private ArrayList<NoticeDTO> dataList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notice);
+        setContentView(R.layout.activity_center);
 
         final Intent intent = getIntent(); // 데이터 수신
         final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
@@ -54,7 +53,7 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
                                 Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(NoticeActivity.this, MainActivity.class);
+                                Intent intent = new Intent(CenterActivity.this, MainActivity.class);
                                 intent.putExtra("dto", dto);
                                 startActivity(intent);
                                 finish();
@@ -73,17 +72,16 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
 
 
         // 자주묻는 질문 버튼 클릭시 intent
-        Button btn2 = findViewById(R.id.qna);
+        Button btn2 = findViewById(R.id.notice);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NoticeActivity.this, CenterActivity.class);
+                Intent intent = new Intent(CenterActivity.this, NoticeActivity.class);
                 intent.putExtra("dto", dto);
                 startActivity(intent);
                 finish();
             }
         });
-
 
         init();
         getData();
@@ -95,19 +93,19 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new NoticeAdapter();
+        adapter = new CenterAdapter();
         recyclerView.setAdapter(adapter);
     }
 
     private void getData() {
         // 임의의 데이터입니다.
 
-        Thread th = new Thread(NoticeActivity.this);
+        Thread th = new Thread(CenterActivity.this);
         th.start();
     }
     @Override
     public void run() {
-        String url = "http://192.168.0.67:80/team3/No_list_android";
+        String url = "http://192.168.0.67:80/team3/Co_list_android";
         try {
             HttpClient http = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
@@ -132,7 +130,6 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
                             dto.setTitle(Object.getString("title"));
                             dto.setWriter(Object.getString("writer"));
                             dto.setContent(Object.getString("content"));
-                            dto.setWritedate(Object.getString("writedate"));
                             // 각 값이 들어간 data를 adapter에 추가합니다.
                             adapter.addItem(dto);
                         }

@@ -38,6 +38,8 @@
         <activity android:name=".Activity.GalleryDetailActivity" />
         <activity android:name=".Activity.GalleryActivity" />
         <activity android:name=".Activity.NoticeActivity" />
+        <activity android:name=".Activity.CenterActivity" />
+        <activity android:name=".Activity.CenterDetailActivity" />
         <activity android:name=".Activity.NoticeDetailActivity" />
         <activity android:name=".Activity.WeatherActivity" />
         <activity android:name=".Activity.SignActivity" />

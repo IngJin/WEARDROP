@@ -1,26 +1,22 @@
 package com.project.weardrop.Other;
 
-import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.project.weardrop.Activity.CenterDetailActivity;
 import com.project.weardrop.Activity.NoticeDetailActivity;
 import com.project.weardrop.DTO.NoticeDTO;
 import com.project.weardrop.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHolder> {
+public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<NoticeDTO> listData = new ArrayList<>();
@@ -34,7 +30,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
         // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
         // return 인자는 ViewHolder 입니다.
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notice, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_center, parent, false);
         return new ItemViewHolder(view);
 
     }
@@ -57,7 +53,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
     }
 
 
-    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView textView1;
         private TextView textView2;
@@ -65,15 +61,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
         private String title;
         private String writer;
         private String content;
-        private String writedate;
         private NoticeDTO data;
 
-        ItemViewHolder(View itemView){
+        ItemViewHolder(View itemView) {
             super(itemView);
 
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
         }
+
         public void onBind(NoticeDTO data) {
             textView1.setText(data.getTitle());
             textView2.setText(data.getWriter());
@@ -82,18 +78,16 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
             title = data.getTitle();
             writer = data.getWriter();
             content = data.getContent();
-            writedate = data.getWritedate();
             itemView.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v){
-            Intent intent = new Intent(v.getContext(), NoticeDetailActivity.class);
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), CenterDetailActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("title", title);
             intent.putExtra("writer", writer);
             intent.putExtra("content", content);
-            intent.putExtra("writedate", writedate);
             v.getContext().startActivity(intent);
         }
     }

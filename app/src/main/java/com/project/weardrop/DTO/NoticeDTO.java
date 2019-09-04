@@ -7,18 +7,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class NoticeDTO implements Serializable {
     private String id, title, writer, content;
+    private String writedate;
 
     public NoticeDTO() {
     }
 
-    public NoticeDTO(String id, String title, String writer, String content) {
+    public NoticeDTO(String id, String title, String writer, String content, String writedate) {
         this.id = id;
         this.title = title;
         this.writer = writer;
         this.content = content;
+        this.writedate = writedate;
     }
 
     public String getId() {
@@ -53,4 +56,7 @@ public class NoticeDTO implements Serializable {
         this.content = content;
     }
 
+    public String getWritedate() { return writedate; }
+
+    public void setWritedate(String writedate) { this.writedate = writedate; }
 }
