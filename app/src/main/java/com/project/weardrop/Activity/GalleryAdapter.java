@@ -1,4 +1,4 @@
-package com.project.weardrop.Other;
+package com.project.weardrop.Activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.project.weardrop.DTO.GalleryDTO;
 import com.project.weardrop.R;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         //holder.mTextViewContent.setText(content);
         holder.mTextViewReadcnt.setText(readcnt);
         //holder.mTextViewWritedate.setText(writedate);
-        Glide.with(mContext).load("http://192.168.0.71/project/resources" + filepath).into(holder.mimageView); //.override(250,250)
+        Glide.with(mContext).load("http://112.164.58.7:80/weardrop/resources" + filepath).into(holder.mimageView); //.override(250,250)
         Log.i("xx",filepath);
 
     }

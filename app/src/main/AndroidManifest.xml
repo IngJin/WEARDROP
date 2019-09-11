@@ -26,6 +26,9 @@
         tools:replace="android:label">
         <activity android:name=".Activity.MapActivity"></activity>
 
+        <activity android:name=".Activity.GalleryInsertActivity"/>
+        <activity android:name=".Activity.GalleryDetailActivity"/>
+        <activity android:name=".Activity.GalleryActivity"/>
         <activity android:name=".Activity.UpdateActivity" />
         <activity android:name=".Activity.SaledetailActivity" />
         <activity android:name=".Activity.Freedetail" />
@@ -37,8 +40,6 @@
         <activity android:name=".Activity.SecondSubActivity" />
         <activity android:name=".Activity.SecondDetailActivity" />
         <activity android:name=".Activity.SecondActivity" />
-        <activity android:name=".Activity.GalleryDetailActivity" />
-        <activity android:name=".Activity.GalleryActivity" />
         <activity android:name=".Activity.NoticeActivity" />
         <activity android:name=".Activity.CenterActivity" />
         <activity android:name=".Activity.CenterDetailActivity" />

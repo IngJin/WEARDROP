@@ -1,3 +1,4 @@
+
 package com.project.weardrop.Activity;
 
 import android.content.Intent;
@@ -17,8 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.project.weardrop.DTO.GalleryDTO;
-import com.project.weardrop.Other.GalleryAdapter;
 import com.project.weardrop.R;
 
 import org.json.JSONArray;
@@ -29,7 +28,6 @@ import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity implements GalleryAdapter.OnItemClickListener {
     //190730 implements GalleryAdapter.OnItemClickListener 추가
-
 
     //190730 추가
 
@@ -76,12 +74,12 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
                                 return true;
 
                             case R.id.menuitem_bottombar_write:
-                                //Intent intent = new Intent(GalleryActivity.this, Gallery_add.class);
-                                //startActivity(intent);
+                              Intent intent = new Intent(GalleryActivity.this, GalleryInsertActivity.class);
+                              startActivity(intent);
                                 return true;
 
                             case R.id.menuitem_bottombar_search:
-                                Toast.makeText(getApplicationContext(), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext    (), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
                                 return true;
                         }
                         return false;
@@ -90,13 +88,13 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     }
 
     private void parseJson() {
-        String url = "http://192.168.0.67:80/teamproject/json.gal";
+        String url = "http://112.164.58.7/weardrop/json.gal";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try{
-                            JSONArray jsonArray = response.getJSONArray("list");
+                            JSONArray jsonArray = response.getJSONArray("andlist");
 
                             for (int i = 0; i < jsonArray.length(); i++){
                                 JSONObject list = jsonArray.getJSONObject(i);
@@ -149,3 +147,4 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
 
 
 }
+

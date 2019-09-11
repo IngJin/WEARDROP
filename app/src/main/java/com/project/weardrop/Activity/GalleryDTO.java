@@ -1,4 +1,4 @@
-package com.project.weardrop.DTO;
+package com.project.weardrop.Activity;
 
 public class GalleryDTO {
     //일단 요것만 적어둠

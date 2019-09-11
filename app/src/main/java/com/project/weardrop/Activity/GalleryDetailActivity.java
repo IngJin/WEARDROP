@@ -43,7 +43,7 @@ public class GalleryDetailActivity extends AppCompatActivity {
         TextView textReadcnt = findViewById(R.id.detail_readcnt);
         TextView textWritedate = findViewById(R.id.detail_writedate);
 
-        Glide.with(this).load("http://192.168.0.71/project/resources" + filepath).into(imageView);
+        Glide.with(this).load("http://112.164.58.7:80/weardrop/resources" + filepath).into(imageView);
         textWriter.setText(writer);
         textTitle.setText(title);
         textContent.setText(content);

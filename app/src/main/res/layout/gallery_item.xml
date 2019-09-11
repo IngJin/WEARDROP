@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="1dp"
+    android:layout_marginBottom="16dp"
+    android:id="@+id/item_cardview"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+        <!-- 카드뷰 전체 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#eee"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <!-- 프로필 -->
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_account_account" />
+
+                    <!-- 프로필 디테일 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/imageView2"
+                        android:layout_toRightOf="@+id/imageView"
+                        android:orientation="vertical">
+
+                        <!-- 작성자 -->
+                        <TextView
+                            android:id="@+id/gal_writer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="글작성자"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="16dp" />
+
+                        <!-- 작성일 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_marginTop="2dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_today_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/gal_writedate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/imageView5"
+                                android:layout_centerVertical="true"
+                                android:text="작성일"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textSize="13dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="15dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- thumbnail -->
+            <RelativeLayout
+                android:id="@+id/rl_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sample_6" />
+            </RelativeLayout>
+
+            <!-- contents -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ddd"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:padding="16dp">
+
+                    <!-- 본문 내용 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/gal_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="타이틀" />
+
+                        <TextView
+                            android:id="@+id/gal_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="내용"
+                            android:textColor="@android:color/darker_gray"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!-- footer -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ddd"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_remove_red_eye" />
+
+                    <TextView
+                        android:id="@+id/gal_readcnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/imageView3"
+                        android:text="조회수"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+</androidx.cardview.widget.CardView>
