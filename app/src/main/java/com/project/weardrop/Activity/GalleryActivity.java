@@ -88,7 +88,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     }
 
     private void parseJson() {
-        String url = "http://112.164.58.7/weardrop/json.gal";
+        String url = "http://112.164.58.7:80/weardrop_app/json.gal";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

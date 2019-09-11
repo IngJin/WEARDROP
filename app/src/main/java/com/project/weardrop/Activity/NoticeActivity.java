@@ -106,7 +106,7 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
     }
     @Override
     public void run() {
-        String url = "http://192.168.0.67:80/teamproject/No_list_android";
+        String url = "http://112.164.58.7:80/weardrop_app/No_list_android";
         try {
             HttpClient http = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);

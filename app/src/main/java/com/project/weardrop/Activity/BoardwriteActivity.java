@@ -59,7 +59,7 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
     private TextView writer;
     Spinner Spinner;
     String code, filepath;
-    private String upload_URL = "http://192.168.0.21:80/teamproject/commu.com"; // Request를 요청 할 URL
+    private String upload_URL = "http://112.164.58.7:80/weardrop_app/commu.com"; // Request를 요청 할 URL
 
     //갤러리로 넘어가는 상수
     private final int GALLERY = 1;

@@ -64,7 +64,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         //holder.mTextViewContent.setText(content);
         holder.mTextViewReadcnt.setText(readcnt);
         //holder.mTextViewWritedate.setText(writedate);
-        Glide.with(mContext).load("http://112.164.58.7:80/weardrop/resources" + filepath).into(holder.mimageView); //.override(250,250)
+        Glide.with(mContext).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(holder.mimageView); //.override(250,250)
         Log.i("xx",filepath);
 
     }

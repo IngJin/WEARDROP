@@ -144,7 +144,7 @@ public class SaleActivity extends AppCompatActivity implements SaleListAdapter.O
     }
 
     private void parseJSON(){
-        String url = "http://192.168.0.21:80/teamproject/sale.com";
+        String url = "http://112.164.58.7:80/weardrop_app/sale.com";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

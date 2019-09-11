@@ -147,12 +147,12 @@ public class Freedetail extends AppCompatActivity implements Runnable {
 
         textViewId.setVisibility(View.INVISIBLE);       //레이아웃에서 id값(textview) 안보이게 하기
 
-        Glide.with(this).load("http://112.164.58.7:80/weardrop/resources" + filepath).into(mimageView);
+        Glide.with(this).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(mimageView);
     }
 
     @Override
     public void run() {
-            String url = "http://192.168.0.21:80/teamproject/anddelete.com" ;
+            String url = "http://112.164.58.7:80/weardrop_app/anddelete.com" ;
 
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체

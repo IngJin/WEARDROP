@@ -56,7 +56,7 @@ public class GalleryInsertActivity extends AppCompatActivity {
     private final int GALLERY = 1;
 
     // Request를 요청 할 URL
-    private String upload_URL = "http://112.164.58.7/weardrop/andinsert.gal";
+    private String upload_URL = "http://112.164.58.7:80/weardrop_app/andinsert.gal";
 
     // Volley
     // Request를 보낼 queue를 생성한다. 필요시엔 전역으로 생성해 사용하면 된다.

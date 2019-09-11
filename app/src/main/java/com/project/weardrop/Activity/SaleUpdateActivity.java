@@ -53,7 +53,7 @@ public class SaleUpdateActivity extends AppCompatActivity {
     private EditText addTitle, addContent;                                                       //레이아웃에서 사용했던 EditText
     private ImageView add_image_view;                                                            //레이아웃에서 사용했던 ImageView
     private Button ImageBtn, add_btn, cancle_btn;                                               //레이아웃에서 사용했던 Button
-    private String upload_URL = "http://192.168.0.21:80/teamproject/andupdate.com";         // Request를 요청 할 URL
+    private String upload_URL = "http://112.164.58.7:80/weardrop_app/andupdate.com";         // Request를 요청 할 URL
     private final int GALLERY = 1;                                                                //갤러리로 넘어가는 상수
     private RequestQueue rQueue;                                                                   // Volley : Request를 보낼 queue를 생성한다. 필요시엔 전역으로 생성해 사용.
     private ArrayList<HashMap<String, String>> arraylist;                                         //스트링값 저장할 ArrayList
@@ -84,7 +84,7 @@ public class SaleUpdateActivity extends AppCompatActivity {
         addTitle.setText(title);
         addWriter.setText(writer);
         addContent.setText(content);
-        Glide.with(this).load("http://192.168.0.21:80/teamproject/resources" + filepath).into(add_image_view);
+        Glide.with(this).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(add_image_view);
 
         requestMultiplePermissions();
 
