@@ -1,4 +1,4 @@
-package com.project.weardrop.Other;
+package com.project.weardrop.Activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,14 +10,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.weardrop.DTO.FreeDTO;
 import com.project.weardrop.R;
 
 import java.util.ArrayList;
 
 public class FreeListAdapter extends RecyclerView.Adapter<FreeListAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<FreeDTO> mItems;
+    private ArrayList<Freelistitem> mItems;
     private static OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -28,7 +27,7 @@ public class FreeListAdapter extends RecyclerView.Adapter<FreeListAdapter.ViewHo
         mListener = listener;
     }
 
-    public FreeListAdapter(Context mContext, ArrayList<FreeDTO> items) {
+    public FreeListAdapter(Context mContext, ArrayList<Freelistitem> items) {
         this.mContext = mContext;
         this.mItems = items;
     }
@@ -37,7 +36,7 @@ public class FreeListAdapter extends RecyclerView.Adapter<FreeListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //카드뷰로 작성한 아이템 레이아웃을 뷰 홀더에 전달
-        View view = LayoutInflater.from(mContext).inflate(R.layout.freecardview, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.free_cardview, parent, false);
         return new ViewHolder(view);
     }
 
@@ -46,7 +45,7 @@ public class FreeListAdapter extends RecyclerView.Adapter<FreeListAdapter.ViewHo
     //뷰 홀더에 데이터를 설정하는 부분
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        FreeDTO item = mItems.get(position);
+        Freelistitem item = mItems.get(position);
 
         String title = item.getTitle();
         String writer = item.getWriter();

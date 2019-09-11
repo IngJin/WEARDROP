@@ -285,7 +285,7 @@ public class SignActivity extends AppCompatActivity {
     class Thread1 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/team3/sign_android";
+            String url = "http://192.168.0.67:80/teamproject/sign_android";
             String userid = editid.getText().toString();
             String writer = editnickname.getText().toString();
             String userpw = editpw.getText().toString();
@@ -333,7 +333,7 @@ public class SignActivity extends AppCompatActivity {
     class Thread2 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/team3/id_check_android";
+            String url = "http://192.168.0.67:80/teamproject/id_check_android";
             String userid = editid.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -380,7 +380,7 @@ public class SignActivity extends AppCompatActivity {
     class Thread3 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/team3/email_check_android";
+            String url = "http://192.168.0.67:80/teamproject/email_check_android";
             String email = edit_email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체

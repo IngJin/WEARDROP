@@ -53,7 +53,6 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(NoticeActivity.this, MainActivity.class);
                                 intent.putExtra("dto", dto);
                                 startActivity(intent);
@@ -107,7 +106,7 @@ public class NoticeActivity extends AppCompatActivity implements Runnable {
     }
     @Override
     public void run() {
-        String url = "http://192.168.0.67:80/team3/No_list_android";
+        String url = "http://192.168.0.67:80/teamproject/No_list_android";
         try {
             HttpClient http = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);

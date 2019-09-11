@@ -33,13 +33,6 @@
                 android:textSize="15sp" />
 
             <Button
-                android:id="@+id/hugi"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:text="후기"
-                android:textSize="15sp" />
-
-            <Button
                 android:id="@+id/map2"
                 android:layout_width="100dp"
                 android:layout_height="50dp"

@@ -90,7 +90,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     }
 
     private void parseJson() {
-        String url = "http://192.168.0.71:80/project/json.gal";
+        String url = "http://192.168.0.67:80/teamproject/json.gal";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override

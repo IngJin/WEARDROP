@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
 import noman.googleplaces.NRPlaces;
@@ -97,10 +98,15 @@ public class MapActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        final Intent intent = getIntent(); // 데이터 수신
+        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         setContentView(R.layout.activity_map);
+
+        Toast.makeText(getApplicationContext(), "지도 호출엔 시간이 걸립니다. 잠시만 기다려주세요", Toast.LENGTH_SHORT).show();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // bottom 버튼 클릭시 사용되는 리스너를 구현
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -111,8 +117,10 @@ public class MapActivity extends AppCompatActivity
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
-                                return true;
+                                Intent intent = new Intent(MapActivity.this, MainActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
                             case R.id.menuitem_bottombar_search:
                                 Toast.makeText(getApplicationContext(), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
                                 showPlaceInformation(currentPosition);
@@ -128,8 +136,10 @@ public class MapActivity extends AppCompatActivity
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MapActivity.this, FreeActivity.class);
+                Intent intent = new Intent(MapActivity.this, Board.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -139,17 +149,9 @@ public class MapActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapActivity.this, SaleActivity.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
-            }
-        });
-
-        //후기 버튼 클릭시 intent
-        Button btn3 = findViewById(R.id.hugi);
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MapActivity.this, HugiActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 

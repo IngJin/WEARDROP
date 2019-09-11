@@ -113,8 +113,10 @@ public class MainActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FreeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Board.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -135,16 +137,12 @@ public class MainActivity extends AppCompatActivity {
         TextView tx4 = (TextView)findViewById(R.id.textView4);
         TextView tx5 = (TextView)findViewById(R.id.textView5);
         TextView tx6 = (TextView)findViewById(R.id.textView6);
-
         MemberDTO dto = (MemberDTO)intent.getSerializableExtra("dto"); *//*클래스*//*
         tx1.setText("아이디 : " + dto.getUserid());
         tx2.setText("닉네임 : " + dto.getWriter());
         tx3.setText("비밀번호 : " + dto.getUserpw());
         tx4.setText("이메일 : " + dto.getEmail());
         tx6.setText("관리자권한 : " + dto.getAdmin());
-
         */
     }
 }
-
-

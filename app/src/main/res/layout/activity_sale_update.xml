@@ -43,12 +43,14 @@
 
                     <!-- 작성자 -->
                     <TextView
-                        android:id="@+id/add_writer"
+                        android:id="@+id/addwriter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:hint="글작성자"
                         android:textAlignment="center"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         />
+
                 </LinearLayout>
             </RelativeLayout>
 
@@ -62,7 +64,9 @@
                     android:id="@+id/add_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+
+                    />
 
                 <Button
                     android:layout_width="match_parent"
@@ -125,37 +129,35 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/select"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:src="@drawable/ic_storage_black_24dp"/>
+                            <!--      <ImageView
+                                      android:id="@+id/select"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginTop="10dp"
+                                      android:src="@drawable/ic_storage_black_24dp"/>-->
 
-                        <Spinner
-                            android:id="@+id/spinner"
-                            android:entries="@array/유형"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="30dp"/>
+                            <!-- <Spinner
+                                 android:id="@+id/spinner"
+                                 android:entries="@array/유형"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_marginTop="10dp"
+                                 android:layout_marginLeft="30dp"/>-->
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/add_title"
+                            android:id="@+id/addtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textAlignment="center"
-                            android:hint="제목을 입력하세요..." />
+                            android:textAlignment="center" />
 
                         <EditText
-                            android:id="@+id/add_content"
+                            android:id="@+id/addcontent"
                             android:layout_width="match_parent"
                             android:layout_height="120dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:hint="내용을 입력하세요..."
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textAlignment="center"
                             android:textColor="@android:color/darker_gray"
@@ -186,16 +188,21 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:text="취소"/>
+
+                    <TextView
+                        android:id="@+id/id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
-            <EditText
-                android:id="@+id/userid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <EditText
-                android:id="@+id/writer2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </ScrollView>

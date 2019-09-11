@@ -1,4 +1,4 @@
-package com.project.weardrop.Other;
+package com.project.weardrop.Activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -10,16 +10,24 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.weardrop.DTO.SaleDTO;
 import com.project.weardrop.R;
 
 import java.util.ArrayList;
 
 public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<SaleDTO> mItems;
+    private ArrayList<Salelistitem> mItems;
+    private static OnItemClickListener mListener;
 
-    public SaleListAdapter(Context mContext, ArrayList<SaleDTO> items){
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
+    public SaleListAdapter(Context mContext, ArrayList<Salelistitem> items){
         this.mContext = mContext;
         this.mItems = items;
     }
@@ -37,7 +45,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.ViewHo
     //뷰 홀더에 데이터를 설정하는 부분
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SaleDTO item = mItems.get(position);
+        Salelistitem item = mItems.get(position);
 
         String title = item.getTitle();
         String writer = item.getWriter();
@@ -46,7 +54,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.ViewHo
         holder.title.setText(title);
         holder.writer.setText(writer);
         holder.writedate.setText(writedate);
-        //클릭이벤트 넣기
+
     }
 
     //아이템 수
@@ -66,6 +74,18 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.ViewHo
             title = itemView.findViewById(R.id.title);
             writer = itemView.findViewById(R.id.writer);
             writedate = itemView.findViewById(R.id.writedate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(mListener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

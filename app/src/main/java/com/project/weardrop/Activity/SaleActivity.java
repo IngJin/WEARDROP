@@ -1,16 +1,19 @@
 package com.project.weardrop.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,8 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.project.weardrop.DTO.SaleDTO;
-import com.project.weardrop.Other.SaleListAdapter;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
 import org.json.JSONArray;
@@ -29,16 +31,28 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SaleActivity extends AppCompatActivity {
+public class SaleActivity extends AppCompatActivity implements SaleListAdapter.OnItemClickListener {
+    public static final String EXTRA_ID = "id";
+    public static final String EXTRA_TITLE = "title";
+    public static final String EXTRA_WRITER = "writer";
+    public static final String EXTRA_WRITEDATE = "writedate";
+    public static final String EXTRA_CONTENT = "content";
+    public static final String EXTRA_FILEPATH = "filepath";
+    private static final int REQUEST_CODE_MENU = 101;
+
     private RecyclerView mRecyclerView;
     private SaleListAdapter mSaleAdapter;
-    private ArrayList<SaleDTO> mSaleList;
+    private ArrayList<Salelistitem> mSaleList;
     private RequestQueue mRequestQueue;
+    private SwipeRefreshLayout swipeRefreshLayout=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
+
+        final Intent intent = getIntent(); // 데이터 수신
+        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         // bottom) 버튼 클릭시 사용되는 리스너를 구현
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -49,12 +63,16 @@ public class SaleActivity extends AppCompatActivity {
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SaleActivity.this, MainActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
                                 return true;
 
                             case R.id.menuitem_bottombar_write:
-                                Intent intent = new Intent(SaleActivity.this, BoardwriteActivity.class);
-                                startActivity(intent);
+                                intent = new Intent(SaleActivity.this, BoardwriteActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivityForResult(intent,REQUEST_CODE_MENU);
                                 return true;
 
                             case R.id.menuitem_bottombar_search:
@@ -70,18 +88,10 @@ public class SaleActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SaleActivity.this, FreeActivity.class);
+                Intent intent = new Intent(SaleActivity.this, Board.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
-            }
-        });
-
-        //후기 버튼 클릭시 intent
-        Button btn2 = findViewById(R.id.hugi);
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SaleActivity.this, HugiActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -91,20 +101,48 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SaleActivity.this, MapActivity.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 
         //리사이클러뷰
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mSaleList = new ArrayList<>();
 
+        //swipeRefreshLayout(새로고침)
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(true);
+                        Intent intent = new Intent(getApplicationContext(), SaleActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                },1000);
+            }
+        });
+
+        mSaleList = new ArrayList<>();
         mRequestQueue = Volley.newRequestQueue(this);
         parseJSON();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_MENU){
+
+             parseJSON();
+        }
+    }
+
     private void parseJSON(){
         String url = "http://192.168.0.21:80/teamproject/sale.com";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -120,12 +158,20 @@ public class SaleActivity extends AppCompatActivity {
                         String title = list.getString("title");
                         String writer = list.getString("writer");
                         String writedate = list.getString("writedate");
+                        String content = list.getString("content");
+                        String code = list.getString("code");
+                        String filepath = list.getString("filepath");
+                        String userid = list.getString("userid");
 
-                        mSaleList.add(new SaleDTO(id, title, writer, writedate));
+                        if(filepath != "null") {
+                            mSaleList.add(new Salelistitem(id, title, writer, writedate, content, code, filepath, userid));
+                        }else{
+                            mSaleList.add(new Salelistitem(id, title, writer, writedate, content, code, userid));
+                        }
                     }
-
                     mSaleAdapter = new SaleListAdapter(SaleActivity.this, mSaleList);
                     mRecyclerView.setAdapter(mSaleAdapter);
+                    mSaleAdapter.setOnItemClickListener(SaleActivity.this);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -138,5 +184,20 @@ public class SaleActivity extends AppCompatActivity {
             }
         });
         mRequestQueue.add(request);
+        mSaleList.clear();                  //리사이클러뷰에 쌓여있는 데이터 clear
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent detailIntent = new Intent(this, SaledetailActivity.class);
+        Salelistitem clickedItem = mSaleList.get(position);
+
+        detailIntent.putExtra(EXTRA_ID, clickedItem.getId());
+        detailIntent.putExtra(EXTRA_TITLE, clickedItem.getTitle());
+        detailIntent.putExtra(EXTRA_WRITER, clickedItem.getWriter());
+        detailIntent.putExtra(EXTRA_WRITEDATE, clickedItem.getWritedate());
+        detailIntent.putExtra(EXTRA_CONTENT, clickedItem.getContent());
+       detailIntent.putExtra(EXTRA_FILEPATH, clickedItem.getFilepath());
+        startActivity(detailIntent);
     }
 }

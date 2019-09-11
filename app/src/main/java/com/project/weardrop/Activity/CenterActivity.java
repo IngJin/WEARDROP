@@ -105,7 +105,7 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
     }
     @Override
     public void run() {
-        String url = "http://192.168.0.67:80/team3/Co_list_android";
+        String url = "http://192.168.0.67:80/teamproject/Co_list_android";
         try {
             HttpClient http = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
