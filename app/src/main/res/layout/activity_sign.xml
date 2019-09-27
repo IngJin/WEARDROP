@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/signtext"
-        android:text="Register"
+        android:text="REGISTER"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120px"
         android:fontFamily="@font/raleway_thin"
         android:textSize="25dp"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         />
     <EditText
         android:layout_width="300dp"
@@ -24,10 +24,11 @@
         android:id="@+id/UseridInput"
         android:layout_centerHorizontal="true"
         android:hint="UserID"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_marginTop="100dp"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <Button
         android:id="@+id/UseridDuplicate"
@@ -35,11 +36,12 @@
         android:layout_height="40dp"
         android:layout_alignRight="@+id/UseridInput"
         android:layout_marginTop="104dp"
-        android:fontFamily="@font/nanumgothic"
-        android:text="Duplicate"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
-        android:textAllCaps="false" />
+        android:layout_marginRight="-4dp"
+        android:background="#00ff0000"
+        android:fontFamily="@font/jalnan"
+        android:text="중복확인"
+        android:textAllCaps="false"
+        android:textColor="#CC3D3D" />
 
     <EditText
         android:layout_width="300dp"
@@ -47,10 +49,11 @@
         android:id="@+id/NickInput"
         android:layout_centerHorizontal="true"
         android:hint="Nickname"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/UseridInput"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <EditText
         android:layout_width="300dp"
@@ -58,11 +61,12 @@
         android:id="@+id/passwordInput"
         android:layout_centerHorizontal="true"
         android:hint="Password"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/NickInput"
         android:inputType="textPassword"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <EditText
         android:layout_width="300dp"
@@ -70,11 +74,12 @@
         android:id="@+id/passwordCheckInput"
         android:layout_centerHorizontal="true"
         android:hint="Password_Check"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/passwordInput"
         android:inputType="textPassword"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <EditText
         android:layout_width="300dp"
@@ -82,10 +87,11 @@
         android:id="@+id/EmailInput"
         android:layout_centerHorizontal="true"
         android:hint="Email"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/passwordCheckInput"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <Button
         android:id="@+id/EmailDuplicate"
@@ -93,10 +99,11 @@
         android:layout_height="40dp"
         android:layout_alignRight="@+id/EmailInput"
         android:layout_marginTop="304dp"
-        android:fontFamily="@font/nanumgothic"
-        android:text="Duplicate"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
+        android:layout_marginRight="-5dp"
+        android:fontFamily="@font/jalnan"
+        android:text="중복확인"
+        android:textColor="#CC3D3D"
+        android:background="#00ff0000"
         android:textAllCaps="false" />
 
 
@@ -110,7 +117,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/nanumgothic"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         />
 
     <Button
@@ -119,25 +126,39 @@
         android:layout_height="30dp"
         android:layout_below="@+id/EmailInput"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="258dp"
-        android:background="@drawable/mybutton"
-        android:fontFamily="@font/nanumgothic"
-        android:text="Terms"
+        android:layout_marginLeft="260dp"
+        android:fontFamily="@font/jalnan"
+        android:background="#00ff0000"
+        android:text="약관보기"
         android:textAllCaps="false"
-        android:textColor="#ffffff" />
+        android:textColor="#CC3D3D" />
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="55dp"
-        android:text="Register"
+        android:text="가입"
         android:id="@+id/RegisterButton"
         android:textAllCaps="false"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="40dp"
         android:layout_below="@+id/EmailInput"
-        android:layout_centerHorizontal="true"
         android:textColor="#ffffff"
         android:background="@drawable/mybutton"
-        android:fontFamily="@font/nanumgothic"/>
+        android:fontFamily="@font/jalnan"
+        />
+
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="55dp"
+        android:text="취소"
+        android:id="@+id/CancelButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="185dp"
+        android:layout_below="@+id/EmailInput"
+        android:textColor="#ffffff"
+        android:background="@drawable/mybutton"
+        android:fontFamily="@font/jalnan"/>
 
     <TextView
         android:id="@+id/checkvalue"

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tx1 = (TextView) findViewById(R.id.NickName);
         tx1.setTypeface(typeface);
 
-        tx1.setText(dto.getWriter());
+        tx1.setText("안녕하세요. " + dto.getWriter() + "님");
 
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -104,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Buy.class);
+                intent.putExtra("dto", dto);
                 startActivity(intent);
+                finish();
             }
         });
 

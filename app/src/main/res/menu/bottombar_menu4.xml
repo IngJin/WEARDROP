@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        tools:ignore="MenuTitle"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuitem_bottombar_home"
+        android:icon="@drawable/ic_home_black"
+        tools:ignore="MenuTitle"
+        app:showAsAction="ifRoom" />
+
+    <item
+        tools:ignore="MenuTitle"
+        app:showAsAction="ifRoom" />
+
+
+
+</menu>

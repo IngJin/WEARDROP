@@ -15,10 +15,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.HttpResponse;
@@ -40,10 +42,15 @@ import static com.project.weardrop.Activity.Board.EXTRA_CONTENT;
 public class SaledetailActivity extends AppCompatActivity implements Runnable {
     String id, filepath;
 
+    MemberDTO dto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saledetail);
+
+        final Intent intent = getIntent(); // 데이터 수신
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         // bottom) 버튼 클릭시 사용되는 리스너를 구현
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -54,7 +61,10 @@ public class SaledetailActivity extends AppCompatActivity implements Runnable {
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SaledetailActivity.this, SaleActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
                                 return true;
 
                             case R.id.menuitem_bottombar_update:
@@ -117,8 +127,6 @@ public class SaledetailActivity extends AppCompatActivity implements Runnable {
                 });
 
         //서버에서 데이터 가져오기
-        Intent intent = getIntent();
-
         id = intent.getStringExtra(EXTRA_ID);
         String title = intent.getStringExtra(EXTRA_TITLE);
         String writer = intent.getStringExtra(EXTRA_WRITER);
@@ -139,14 +147,14 @@ public class SaledetailActivity extends AppCompatActivity implements Runnable {
         textViewWriter.setText(writer);
         textViewWritedate.setText(writedate);
         textViewContent.setText(content);
-        Glide.with(this).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(mimageView);
+        Glide.with(this).load("http://112.164.58.217:80/weardrop/resources" + filepath).into(mimageView);
 
         textViewId.setVisibility(View.INVISIBLE);       //레이아웃에서 id(textview) 안보이게 하기
 
     }
     @Override
     public void run() {
-        String url = "http://112.164.58.7:80/weardrop_app/anddelete.com" ;
+        String url = "http://112.164.58.217:80/weardrop_app/anddelete.com" ;
 
         try {
             // NmaeValuePair 변수명과 값을 함께 저장하는 객체

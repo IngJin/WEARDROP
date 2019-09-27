@@ -2,6 +2,7 @@ package com.project.weardrop.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.project.weardrop.DTO.MemberDTO;
@@ -35,13 +37,17 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
 
     private CenterAdapter adapter;
     private ArrayList<NoticeDTO> dataList;
+    private SwipeRefreshLayout swipeRefreshLayout=null;
+
+    MemberDTO dto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_center);
 
         final Intent intent = getIntent(); // 데이터 수신
-        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         // bottom 버튼 클릭시 사용되는 리스너를 구현
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -59,12 +65,12 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
                                 finish();
                                 return true;
 
-                            case R.id.menuitem_bottombar_write:
+                          /*  case R.id.menuitem_bottombar_write:
                                 return true;
 
                             case R.id.menuitem_bottombar_search:
                                 Toast.makeText(getApplicationContext(), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
-                                return true;
+                                return true;*/
                         }
                         return false;
                     }
@@ -85,6 +91,24 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
 
         init();
         getData();
+
+        //swipeRefreshLayout(당겨서 새로고침)
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(true);
+                        Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+                        intent.putExtra("dto", dto);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, 1000);
+            }
+        });
     }
 
     private void init() {
@@ -105,7 +129,7 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
     }
     @Override
     public void run() {
-        String url = "http://112.164.58.7:80/weardrop_app/Co_list_android";
+        String url = "http://112.164.58.217:80/weardrop_app/Co_list_android";
         try {
             HttpClient http = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
@@ -125,13 +149,15 @@ public class CenterActivity extends AppCompatActivity implements Runnable {
                     try {
                         for(int i=0; i < Array.length(); i++) {
                             JSONObject Object = Array.getJSONObject(i);
-                            NoticeDTO dto = new NoticeDTO();
-                            dto.setId(Object.getString("id"));
-                            dto.setTitle(Object.getString("title"));
-                            dto.setWriter(Object.getString("writer"));
-                            dto.setContent(Object.getString("content"));
+                            NoticeDTO dto2 = new NoticeDTO();
+                            dto2.setId(Object.getString("id"));
+                            dto2.setTitle(Object.getString("title"));
+                            dto2.setWriter(Object.getString("writer"));
+                            dto2.setContent(Object.getString("content"));
                             // 각 값이 들어간 data를 adapter에 추가합니다.
+                            adapter.addItem(dto2);
                             adapter.addItem(dto);
+
                         }
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {

@@ -32,40 +32,5 @@
                 android:src="@drawable/sample_6" />
         </RelativeLayout>
 
-        <!-- footer -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ddd"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginBottom="1dp"
-                android:background="#fff"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_remove_red_eye" />
-
-                <TextView
-                    android:id="@+id/gal_readcnt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@+id/imageView3"
-                    android:text="조회수"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

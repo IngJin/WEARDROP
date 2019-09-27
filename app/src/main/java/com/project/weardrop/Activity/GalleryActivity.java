@@ -3,6 +3,7 @@ package com.project.weardrop.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
 import org.json.JSONArray;
@@ -35,7 +38,6 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     public static final String EXTRA_WRITER = "writer";
     public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_CONTENT = "content";
-    public static final String EXTRA_READCNT = "readcnt";
     public static final String EXTRA_WRITEDATE = "writedate";
     public static final String EXTRA_FILEPATH = "filepath";
 
@@ -43,11 +45,18 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     private GalleryAdapter mGalleryAdapter;
     private ArrayList<GalleryDTO> mGalleryList;
     private RequestQueue mRequestQueue;
+    private SwipeRefreshLayout swipeRefreshLayout=null;
+
+
+    MemberDTO dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
+        final Intent intent = getIntent(); // 데이터 수신
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         mRecyclerView = findViewById(R.id.gallery_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -55,6 +64,23 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(this,));
         //mGalleryAdapter.notifyDataSetChanged();//추가
+        //swipeRefreshLayout(당겨서 새로고침)
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(true);
+                        Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
+                        intent.putExtra("dto", dto);
+                        startActivity(intent);
+                        finish();
+                    }
+                },1000);
+            }
+        });
 
         mGalleryList = new ArrayList<>();
 
@@ -70,13 +96,17 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(GalleryActivity.this, MainActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
                                 return true;
 
                             case R.id.menuitem_bottombar_write:
-                              Intent intent = new Intent(GalleryActivity.this, GalleryInsertActivity.class);
+                              intent = new Intent(GalleryActivity.this, GalleryInsertActivity.class);
+                              intent.putExtra("dto", dto);
                               startActivity(intent);
-                                return true;
+                              return true;
 
                             case R.id.menuitem_bottombar_search:
                                 Toast.makeText(getApplicationContext    (), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
@@ -88,7 +118,7 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
     }
 
     private void parseJson() {
-        String url = "http://112.164.58.7:80/weardrop_app/json.gal";
+        String url = "http://112.164.58.217:80/weardrop/json.gal";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -103,10 +133,9 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
                                 String writer = list.getString("writer");
                                 String title = list.getString("title");
                                 String content = list.getString("content");
-                                String readcnt = list.getString("readcnt");
                                 String writedate = list.getString("writedate");
 
-                                mGalleryList.add(new GalleryDTO(id, writer, title, content, readcnt, filepath, writedate));
+                                mGalleryList.add(new GalleryDTO(id, writer, title, content, filepath, writedate));
                             }
 
                             mGalleryAdapter = new GalleryAdapter(GalleryActivity.this, mGalleryList);
@@ -137,9 +166,9 @@ public class GalleryActivity extends AppCompatActivity implements GalleryAdapter
         detailIntent.putExtra(EXTRA_WRITER, clickedItem.getWriter());
         detailIntent.putExtra(EXTRA_TITLE, clickedItem.getTitle());
         detailIntent.putExtra(EXTRA_CONTENT,clickedItem.getContent());
-        detailIntent.putExtra(EXTRA_READCNT, clickedItem.getReadcnt());
         detailIntent.putExtra(EXTRA_WRITEDATE, clickedItem.getWritedate());
         detailIntent.putExtra(EXTRA_FILEPATH, clickedItem.getFilepath());
+        detailIntent.putExtra("dto", dto);
 
         startActivity(detailIntent);
 

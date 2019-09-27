@@ -122,7 +122,6 @@ public class MapActivity extends AppCompatActivity
                                 startActivity(intent);
                                 finish();
                             case R.id.menuitem_bottombar_search:
-                                Toast.makeText(getApplicationContext(), "검색버튼 클릭", Toast.LENGTH_SHORT).show();
                                 showPlaceInformation(currentPosition);
                                 return true;
                         }

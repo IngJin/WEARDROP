@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 import com.squareup.picasso.Picasso;
 
@@ -50,13 +52,14 @@ public class GalleryInsertActivity extends AppCompatActivity {
     //변수 선언
     private Button ImageBtn, add_btn, cancle_btn; //레이아웃에서 사용했던 Button
     private ImageView add_image_view; //레이아웃에서 사용했던 ImageView
-    private EditText writer, title, content; //레이아웃에서 사용했던 EditText
+    private EditText title, content; //레이아웃에서 사용했던 EditText
+    private TextView writer, userid;
 
     //갤러리로 넘어가는 상수
     private final int GALLERY = 1;
 
     // Request를 요청 할 URL
-    private String upload_URL = "http://112.164.58.7:80/weardrop_app/andinsert.gal";
+    private String upload_URL = "http://112.164.58.217:80/weardrop_app/andinsert.gal";
 
     // Volley
     // Request를 보낼 queue를 생성한다. 필요시엔 전역으로 생성해 사용하면 된다.
@@ -74,6 +77,9 @@ public class GalleryInsertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery_insert);
 
+        final Intent intent = getIntent(); // 데이터 수신
+        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+
         requestMultiplePermissions();
 
         //버튼
@@ -88,6 +94,11 @@ public class GalleryInsertActivity extends AppCompatActivity {
         writer = findViewById(R.id.add_writer);
         title = findViewById(R.id.add_title);
         content = findViewById(R.id.add_content);
+        userid = findViewById(R.id.add_userid);
+        userid.setVisibility(View.GONE);
+
+        writer.setText(dto.getWriter());
+        userid.setText(dto.getUserid());
 
         //이미지 업로드 버튼 눌렀을때 실행되는 동작
         ImageBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +118,7 @@ public class GalleryInsertActivity extends AppCompatActivity {
             public void onClick(View view) {
                 uploadImage(bitmap); // 버튼을 클릭했을 때 request 객체를 만들고 request queue 에 넣는다.
                 finish();
+                Toast.makeText(GalleryInsertActivity.this, "게시글이 저장되었습니다. 새로고침해주세요!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -161,7 +173,6 @@ public class GalleryInsertActivity extends AppCompatActivity {
                         rQueue.getCache().clear();
                         try {
                             JSONObject jsonObject = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                             jsonObject.toString().replace("\\\\", "");
 
@@ -207,6 +218,7 @@ public class GalleryInsertActivity extends AppCompatActivity {
                 // 아래와 같은 과정이 필요하다
 
                 try{
+                    params.put(URLEncoder.encode("userid", "UTF-8"), URLEncoder.encode(userid.getText().toString(), "UTF-8"));  //add string parameters
                     params.put(URLEncoder.encode("writer", "UTF-8"), URLEncoder.encode(writer.getText().toString(), "UTF-8"));  //add string parameters
                     params.put(URLEncoder.encode("title", "UTF-8"), URLEncoder.encode(title.getText().toString(), "UTF-8"));  //add string parameters
                     params.put(URLEncoder.encode("content", "UTF-8"), URLEncoder.encode(content.getText().toString(), "UTF-8"));  //add string parameters
@@ -270,7 +282,6 @@ public class GalleryInsertActivity extends AppCompatActivity {
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                         }
 
                         // check for permanent denial of any permission

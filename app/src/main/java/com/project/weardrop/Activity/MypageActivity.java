@@ -1,5 +1,6 @@
 package com.project.weardrop.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,9 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.project.weardrop.DTO.MemberDTO;
+import com.project.weardrop.DTO.MirrorDTO;
 import com.project.weardrop.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,21 +51,23 @@ public class MypageActivity extends AppCompatActivity {
 
     RelativeLayout layout;
     EditText editid, editpw, editnickname, editpw_chack, edit_email;
-    Button mypageView, modify, Duplicate, secession;
+    Button mypageView, modify, Duplicate, secession, mirror_button;
     TextView checkvalue;
     String check = "0";
+
+    MemberDTO dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
 
-        layout = findViewById(R.id.Layout3);
-        layout.setBackgroundResource(R.drawable.background);
+        //layout = findViewById(R.id.Layout3);
+        //layout.setBackgroundResource(R.drawable.background);
 
         final Intent intent = getIntent(); // 데이터 수신
 
-        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         NICKNAME = dto.getWriter();
         EMAIL = dto.getEmail();
@@ -80,6 +87,7 @@ public class MypageActivity extends AppCompatActivity {
         modify = findViewById(R.id.mypagemodifedButton);
         Duplicate = findViewById(R.id.mypageEmailDuplicate);
         secession = findViewById(R.id.mypagedeleteButton);
+        mirror_button = findViewById(R.id.mirror_button);
 
         checkvalue = (TextView)findViewById(R.id.mypagecheckvalue);
         checkvalue.setVisibility(View.GONE);
@@ -88,6 +96,26 @@ public class MypageActivity extends AppCompatActivity {
         editnickname.setText(NICKNAME);
         editpw.setText(USERPW);
         edit_email.setText(EMAIL);
+
+
+        // bottom) 버튼 클릭시 사용되는 리스너를 구현
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        // 어떤 메뉴 아이템이 터치되었는지 확인
+                        switch (item.getItemId()) {
+                            case R.id.menuitem_bottombar_home:
+                                Intent intent = new Intent(MypageActivity.this, MainActivity.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
 
         mypageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +127,36 @@ public class MypageActivity extends AppCompatActivity {
                     editpw.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     check = "0";
                 }
+            }
+        });
+
+        mirror_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View dialogView = getLayoutInflater().inflate(R.layout.iot_mirror_dialog, null);
+                final EditText et = (EditText) dialogView.findViewById(R.id.findemail);
+                AlertDialog.Builder fid = new AlertDialog.Builder(MypageActivity.this);
+                fid.setView(dialogView);
+
+                fid.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Thread5 th5 = new Thread5();
+                        th5.start();
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+
+                fid.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+                fid.show();
             }
         });
 
@@ -286,7 +344,7 @@ public class MypageActivity extends AppCompatActivity {
     class Thread1 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/teamproject/email_check_android";
+            String url = "http://112.164.58.217:80/weardrop_app/email_check_android";
             String email = edit_email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -333,7 +391,7 @@ public class MypageActivity extends AppCompatActivity {
     class Thread2 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/teamproject/email_check_android";
+            String url = "http://112.164.58.217:80/weardrop_app/email_check_android";
             String email = edit_email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -377,7 +435,7 @@ public class MypageActivity extends AppCompatActivity {
     class Thread3 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/teamproject/mod_android";
+            String url = "http://112.164.58.217:80/weardrop_app/mod_android";
             String writer = editnickname.getText().toString();
             String userpw = editpw.getText().toString();
             String email = edit_email.getText().toString();
@@ -422,7 +480,7 @@ public class MypageActivity extends AppCompatActivity {
     class Thread4 extends Thread {
         @Override
         public void run() {
-            String url = "http://192.168.0.67:80/teamproject/delete_android";
+            String url = "http://112.164.58.217:80/weardrop_app/delete_android";
             String userid = editid.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -453,6 +511,59 @@ public class MypageActivity extends AppCompatActivity {
                             finish();
                         }
                     }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class Thread5 extends Thread {
+        @Override
+        public void run() {
+            String url = "http://112.164.58.217:80/weardrop_app/iot_app_usermirror";
+            String userid = editid.getText().toString();
+            try {
+                // NmaeValuePair 변수명과 값을 함께 저장하는 객체
+                HttpClient http = new DefaultHttpClient();
+                ArrayList<NameValuePair> postData = new ArrayList<>();
+                // post 방식으로 전달할 값들
+                postData.add(new BasicNameValuePair("userid", userid));
+                // URI encoding이 필요한 한글, 특수문자 값들 인코딩
+                UrlEncodedFormEntity request = new UrlEncodedFormEntity(postData, "utf-8");
+                HttpPost httpPost = new HttpPost(url);
+                // http 에 인코딩된 값 세팅
+                httpPost.setEntity(request);
+                // post 방식으로 전달하고 응답은 response에 저장
+                HttpResponse response = http.execute(httpPost);
+                // response text를 String으로 변환
+                String body = EntityUtils.toString(response.getEntity());
+                // String 을 JSON으로...
+                final JSONObject obj = new JSONObject(body);
+                final String message = obj.getString("message");
+                final JSONObject Object = new JSONObject(message);
+
+                // 백그라운드 스레드에서 메인 UI를 변경하고자 하는경우 사용
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (message != null) {
+                            Intent intent = new Intent(getApplicationContext(), MirrorActivity.class);
+                            try {
+                                String userid = Object.getString("userid");
+                                String time = Object.getString("time");
+                                String weather = Object.getString("weather");
+                                MirrorDTO dto = new MirrorDTO(userid, time, weather);
+                                intent.putExtra("mirror", dto);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            intent.putExtra("dto", dto);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
                 });
             } catch (Exception e) {
                 e.printStackTrace();

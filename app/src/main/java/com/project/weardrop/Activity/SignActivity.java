@@ -40,7 +40,7 @@ import cz.msebera.android.httpclient.util.EntityUtils;
 
 public class SignActivity extends AppCompatActivity {
     EditText editid, editpw, editnickname, editpw_chack, edit_email;
-    Button register, duplicate, duplicate_email, terms_button;
+    Button register, cancel, duplicate, duplicate_email, terms_button;
     RelativeLayout layout;
     TextView checkvalue;
 
@@ -50,8 +50,8 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
 
-        layout = findViewById(R.id.Layout2);
-        layout.setBackgroundResource(R.drawable.background);
+       // layout = findViewById(R.id.Layout2);
+        //layout.setBackgroundResource(R.drawable.background);
 
         // id 값 지정
         editid = (EditText)findViewById(R.id.UseridInput);
@@ -60,6 +60,7 @@ public class SignActivity extends AppCompatActivity {
         editpw_chack = (EditText)findViewById(R.id.passwordCheckInput);
         edit_email = (EditText)findViewById(R.id.EmailInput);
         register = (Button)findViewById(R.id.RegisterButton);
+        cancel = (Button)findViewById(R.id.CancelButton);
         duplicate = (Button)findViewById(R.id.UseridDuplicate);
         duplicate_email = (Button)findViewById(R.id.EmailDuplicate);
         final CheckBox terms = (CheckBox)findViewById(R.id.terms);
@@ -279,13 +280,24 @@ public class SignActivity extends AppCompatActivity {
                 th1.start();
             }
         });
+
+        //취소버튼 클릭 시
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     // 회원가입 서버 통신
     class Thread1 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/sign_android";
+            String url = "http://112.164.58.217:80/weardrop_app/sign_android";
             String userid = editid.getText().toString();
             String writer = editnickname.getText().toString();
             String userpw = editpw.getText().toString();
@@ -333,7 +345,7 @@ public class SignActivity extends AppCompatActivity {
     class Thread2 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/id_check_android";
+            String url = "http://112.164.58.217:80/weardrop_app/id_check_android";
             String userid = editid.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -380,7 +392,7 @@ public class SignActivity extends AppCompatActivity {
     class Thread3 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/email_check_android";
+            String url = "http://112.164.58.217:80/weardrop_app/email_check_android";
             String email = edit_email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체

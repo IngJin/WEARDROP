@@ -7,59 +7,70 @@
     android:id="@+id/layout"
     tools:context=".Activity.LoginActivity">
 
+    <ImageView
+        android:layout_marginTop="60dp"
+        android:layout_width="230dp"
+        android:layout_height="75dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignStart="@id/KaKaoButton"
+        android:src="@drawable/logo_gal_list"
+        />
+
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/UseridInput"
         android:layout_centerHorizontal="true"
-        android:hint="UserID"
-        android:layout_marginTop="151dp"
-        android:textColor="#ffffff"
-    	android:textColorHint="#ffffff"
-        android:fontFamily="@font/nanumgothic"/>
+        android:hint="아이디"
+        android:layout_marginTop="155dp"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
+        android:fontFamily="@font/nanumgothic"
+        android:theme="@style/EditTheme"/>
 
     <EditText
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:id="@+id/passwordInput"
         android:layout_centerHorizontal="true"
-        android:hint="Password"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:hint="비밀번호"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
         android:layout_below="@+id/UseridInput"
         android:inputType="textPassword"
-        android:fontFamily="@font/nanumgothic"/>
+        android:fontFamily="@font/nanumgothic"
+        android:theme="@style/EditTheme"/>
 
     <CheckBox
         android:text="로그인 정보 기억하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox"
-        android:layout_below="@+id/passwordInput"
-        android:layout_marginLeft="30dp"
-        android:textColor="#ffffff"
+        android:layout_below="@+id/loginButton"
+        android:layout_marginTop="8dp"
+        android:layout_alignLeft="@+id/passwordInput"
+        android:textColor="#000000"
         android:fontFamily="@font/nanumgothic"/>
 
     <LinearLayout
         android:id="@+id/find"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordInput"
-        android:layout_marginLeft="210dp"
-        android:layout_marginTop="8dp">
+        android:layout_below="@+id/buttonNaverLogin"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="80dp">
 
         <TextView
             android:id="@+id/findid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothic"
-            android:textColor="#ffffff"
             android:text="아이디 찾기"
-            android:textSize="10dp"/>
+            android:textColor="#000000" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothic"
             android:text=" / "
             android:textColor="#ffffff"
@@ -70,36 +81,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothic"
-            android:textColor="#ffffff"
-            android:textSize="10dp"
+            android:textColor="#000000"
             android:text="비밀번호 찾기" />
     </LinearLayout>
 
     <Button
-        android:layout_width="140dp"
+        android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="LogIn"
+        android:text="로그인"
         android:id="@+id/loginButton"
         android:textAllCaps="false"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/find"
-        android:layout_toStartOf="@+id/signupButton"
-        android:textColor="#ffffff"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/passwordInput"
         android:background="@drawable/mybutton"
+        android:textColor="#FFFFFF"
         android:layout_marginRight="10dp"
-        android:fontFamily="@font/nanumgothic"/>
+        android:layout_alignStart="@+id/passwordInput"
+        android:fontFamily="@font/jalnan" />
 
     <Button
-        android:layout_width="140dp"
-        android:layout_height="50dp"
-        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
         android:id="@+id/signupButton"
         android:textAllCaps="false"
-        android:layout_alignTop="@+id/loginButton"
-        android:layout_alignEnd="@+id/passwordInput"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
-        android:layout_marginRight="5dp"
+        android:layout_alignTop="@+id/find"
+        android:layout_marginLeft="209dp"
+        android:layout_marginTop="-17.6dp"
+        android:textColor="#000000"
+        android:background="#00ff0000"
         android:fontFamily="@font/nanumgothic"/>
 
     <com.kakao.usermgmt.LoginButton
@@ -109,19 +119,28 @@
         />
 
 
+    <Button
+        android:id="@+id/naverButton"
+        android:layout_width="230dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/KaKaoButton"
+        android:layout_centerInParent="true"
+        android:background="@drawable/naver"/>
+
     <com.nhn.android.naverlogin.ui.view.OAuthLoginButton
         android:id="@+id/buttonNaverLogin"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/KaKaoButton"
-        android:layout_centerInParent="true"/>
+        android:layout_centerVertical="true"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:id="@+id/KaKaoButton"
         android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/loginButton"
         android:layout_centerInParent="true"
         android:background="@drawable/kakao"/>

@@ -32,6 +32,7 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 import com.squareup.picasso.Picasso;
 
@@ -48,32 +49,38 @@ import java.util.List;
 import java.util.Map;
 
 public class UpdateActivity extends AppCompatActivity {
-    String id, title, content, writer, code, filepath;
-    private TextView addWriter;                                                                   //레이아웃에서 사용했던 TextView
+    String id, userid, title, content, writer, code, filepath;
+    private TextView addWriter, addUserid;                                                                   //레이아웃에서 사용했던 TextView
     private EditText addTitle, addContent;                                                       //레이아웃에서 사용했던 EditText
     private ImageView add_image_view;                                                            //레이아웃에서 사용했던 ImageView
     private Button ImageBtn, add_btn, cancle_btn;                                               //레이아웃에서 사용했던 Button
-    private String upload_URL = "http://112.164.58.7:80/weardrop_app/andupdate.com";         // Request를 요청 할 URL
+    private String upload_URL = "http://112.164.58.217:80/weardrop_app/andupdate.com";         // Request를 요청 할 URL
     private final int GALLERY = 1;                                                                //갤러리로 넘어가는 상수
     private RequestQueue rQueue;                                                                   // Volley : Request를 보낼 queue를 생성한다. 필요시엔 전역으로 생성해 사용.
     private ArrayList<HashMap<String, String>> arraylist;                                         //스트링값 저장할 ArrayList
     private Bitmap bitmap;                                                                         //사진 보여줄 Bitmap
 
+    MemberDTO dto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
-        //상세화면 데이터 가져오기
-        final Intent intent = getIntent();
+        final Intent intent = getIntent(); // 데이터 수신
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         id = intent.getStringExtra("id");
+        userid = intent.getStringExtra("userid");
         title = intent.getStringExtra("title");
         writer = intent.getStringExtra("writer");
         content = intent.getStringExtra("content");
         filepath = intent.getStringExtra("filepath");
 
         //activity_update.xml id 값
+        addUserid = findViewById(R.id.adduserid);
+        addUserid.setVisibility(View.GONE);
+        addUserid.setText(dto.getUserid());
+
         addTitle = findViewById(R.id.addtitle);
         addWriter = findViewById(R.id.addwriter);
         addContent = findViewById(R.id.addcontent);
@@ -85,7 +92,7 @@ public class UpdateActivity extends AppCompatActivity {
         addTitle.setText(title);
         addWriter.setText(writer);
         addContent.setText(content);
-        Glide.with(this).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(add_image_view);
+        Glide.with(this).load("http://112.164.58.217:80/weardrop/resources" + filepath).into(add_image_view);
 
         requestMultiplePermissions();
 
@@ -105,6 +112,7 @@ public class UpdateActivity extends AppCompatActivity {
                 uploadImage(bitmap);        // 버튼을 클릭했을 때 request 객체를 만들고 request queue 에넣는다.
                 Intent intent1 = new Intent(UpdateActivity.this, Board.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.putExtra("dto", dto);
                 startActivity(intent1);
                 Toast.makeText(UpdateActivity.this, "게시글이 수정되었습니다. 새로고침 해주세요!", Toast.LENGTH_LONG).show();
             }
@@ -151,7 +159,6 @@ public class UpdateActivity extends AppCompatActivity {
                         rQueue.getCache().clear();
                         try {
                             JSONObject jsonObject = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                             jsonObject.toString().replace("\\\\", "");
 
@@ -187,7 +194,7 @@ public class UpdateActivity extends AppCompatActivity {
                 try {
                     params.put("code", code);
                     params.put(URLEncoder.encode("id", "UTF-8"), URLEncoder.encode(id, "UTF-8"));                                       //add string parameters
-                    params.put(URLEncoder.encode("userid", "UTF-8"), URLEncoder.encode(addWriter.getText().toString(), "UTF-8"));     //add string parameters
+                    params.put(URLEncoder.encode("userid", "UTF-8"), URLEncoder.encode(addUserid.getText().toString(), "UTF-8"));     //add string parameters
                     params.put(URLEncoder.encode("writer", "UTF-8"), URLEncoder.encode(addWriter.getText().toString(), "UTF-8"));     //add string parameters
                     params.put(URLEncoder.encode("title", "UTF-8"), URLEncoder.encode(addTitle.getText().toString(), "UTF-8"));       //add string parameters
                     params.put(URLEncoder.encode("content", "UTF-8"), URLEncoder.encode(addContent.getText().toString(), "UTF-8"));  //add string parameters

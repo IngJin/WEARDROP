@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:textSize="25dp"
+        android:text="스마트미러 설정"
+        android:fontFamily="@font/jalnan" />
+
+    <TextView
+        android:id="@+id/mirror_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스마트미러 시간 설정"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/jalnan"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/time_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mirror_time_text"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jalnan"
+        android:textSize="20dp"
+        android:text="off" />
+
+    <Switch
+        android:id="@+id/mirror_time_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mirror_time_text"
+        android:layout_toRightOf="@+id/time_off"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/time_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="on"
+        android:fontFamily="@font/jalnan"
+        android:layout_below="@+id/mirror_time_text"
+        android:layout_toRightOf="@+id/mirror_time_switch"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"/>
+
+
+    <TextView
+        android:id="@+id/mirror_weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="스마트미러 날씨 설정"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="40dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/jalnan" />
+
+    <TextView
+        android:id="@+id/weather_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="off"
+        android:fontFamily="@font/jalnan"
+        android:layout_below="@+id/mirror_weather_text"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="110dp"/>
+
+    <Switch
+        android:id="@+id/mirror_weather_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/weather_off"
+        android:layout_below="@+id/mirror_weather_text"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:id="@+id/weather_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="on"
+        android:fontFamily="@font/jalnan"
+        android:layout_toRightOf="@+id/mirror_weather_switch"
+        android:layout_below="@+id/mirror_weather_text"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"/>
+
+    <Button
+        android:id="@+id/stop_mirror"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather_on"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/mybutton"
+        android:textColor="#FFFFFF"
+        android:text="스마트미러 사용 중지"
+        android:fontFamily="@font/jalnan" />
+
+    <TextView
+        android:id="@+id/edituserid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/edittime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/editweather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_marginTop="65dp"
+        android:layout_below="@+id/stop_mirror"
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="0dp"
+        app:itemBackground="?attr/colorPrimary"
+        app:itemIconTint="@android:color/black"
+        app:menu="@menu/bottombar_menu4" />
+
+
+</RelativeLayout>

@@ -11,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/signtext"
-        android:text="회원정보 수정"
+        android:text="MODIFY"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120px"
         android:fontFamily="@font/raleway_thin"
         android:textSize="25dp"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         />
 
     <EditText
@@ -25,10 +25,11 @@
         android:id="@+id/mypageNickInput"
         android:layout_centerHorizontal="true"
         android:hint="mypageNickname"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_marginTop="100dp"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
 
     <EditText
@@ -37,11 +38,12 @@
         android:id="@+id/mypagepassword"
         android:layout_centerHorizontal="true"
         android:hint="Password"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/mypageNickInput"
         android:inputType="textPassword"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <Button
         android:id="@+id/mypagePWView"
@@ -49,11 +51,12 @@
         android:layout_height="40dp"
         android:layout_alignRight="@+id/mypagepassword"
         android:layout_marginTop="150dp"
-        android:fontFamily="@font/nanumgothic"
-        android:text="View"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
-        android:textAllCaps="false" />
+        android:layout_marginRight="-4dp"
+        android:fontFamily="@font/jalnan"
+        android:text="보기"
+        android:textAllCaps="false"
+        android:textColor="#CC3D3D"
+        android:background="#00ff0000"/>
 
 
     <EditText
@@ -62,11 +65,12 @@
         android:id="@+id/mypagepasswordCheckInput"
         android:layout_centerHorizontal="true"
         android:hint="Password_Check"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/mypagepassword"
         android:inputType="textPassword"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
 
     <EditText
         android:layout_width="300dp"
@@ -74,10 +78,12 @@
         android:id="@+id/mypageEmailInput"
         android:layout_centerHorizontal="true"
         android:hint="Email"
-        android:textColor="#ffffff"
-        android:textColorHint="#ffffff"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         android:layout_below="@+id/mypagepasswordCheckInput"
-        android:fontFamily="@font/raleway_thin"/>
+        android:fontFamily="@font/raleway_thin"
+        android:theme="@style/EditTheme"/>
+
 
     <Button
         android:id="@+id/mypageEmailDuplicate"
@@ -85,38 +91,58 @@
         android:layout_height="40dp"
         android:layout_alignRight="@+id/mypageEmailInput"
         android:layout_marginTop="250dp"
-        android:fontFamily="@font/nanumgothic"
-        android:text="Duplicate"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
+        android:layout_marginRight="-4dp"
+        android:fontFamily="@font/jalnan"
+        android:text="중복확인"
+        android:textColor="#CC3D3D"
+        android:background="#00ff0000"
         android:textAllCaps="false" />
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:text="Modified"
-        android:id="@+id/mypagemodifedButton"
-        android:textAllCaps="false"
-        android:layout_marginTop="40dp"
+    <LinearLayout
+        android:id="@+id/Linear_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/mypageEmailInput"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
-        android:fontFamily="@font/nanumgothic"/>
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/mypagemodifedButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/select"
+            android:fontFamily="@font/jalnan"
+            android:layout_marginLeft="40px"
+            android:text="수정"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/mypagedeleteButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mypageEmailInput"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/mypagemodifedButton"
+            android:background="@drawable/select"
+            android:fontFamily="@font/jalnan"            android:text="삭제"
+            android:textAllCaps="false"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="55dp"
-        android:text="Secession"
-        android:id="@+id/mypagedeleteButton"
-        android:textAllCaps="false"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/mypagemodifedButton"
+        android:id="@+id/mirror_button"
+        android:layout_width="271dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/Linear_button"
         android:layout_centerHorizontal="true"
-        android:textColor="#ffffff"
-        android:background="@drawable/mybutton"
-
-        android:fontFamily="@font/nanumgothic"/>
+        android:layout_marginTop="20dp"
+        android:background="@drawable/select"
+        android:fontFamily="@font/jalnan"
+        android:text="스마트미러"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/mypagecheckvalue"
@@ -127,5 +153,22 @@
         android:id="@+id/mypageEditid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_below="@+id/mirror_button"
+        android:layout_weight="1">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="0dp"
+            app:itemBackground="?attr/colorPrimary"
+            app:itemIconTint="@android:color/black"
+            app:menu="@menu/bottombar_menu4" />
+    </LinearLayout>
 
 </RelativeLayout>

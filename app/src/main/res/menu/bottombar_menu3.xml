@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <item
         android:id="@+id/menuitem_bottombar_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="홈"
+        android:icon="@drawable/ic_home_black"
+        tools:ignore="MenuTitle"
         app:showAsAction="ifRoom" />
+
     <item
-        android:title=""
+        android:id="@+id/menuitem_bottombar_profile"
+        android:icon="@drawable/ic_person_black"
+        tools:ignore="MenuTitle"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menuitem_bottombar_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="검색"
+        android:icon="@drawable/ic_search_black"
+        tools:ignore="MenuTitle"
         app:showAsAction="ifRoom" />
 
 </menu>

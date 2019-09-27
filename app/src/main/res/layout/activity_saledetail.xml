@@ -38,32 +38,6 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="16dp" />
 
-                <!-- 추천수 -->
-                <LinearLayout
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/icon_likecnt"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="2dp"
-                        android:src="@drawable/ic_favorite_border_black_24dp" />
-
-                    <TextView
-                        android:id="@+id/detail_likecnt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_toRightOf="@+id/icon_likecnt"
-                        android:text="추천수"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="15dp" />
-                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
 
@@ -76,7 +50,7 @@
             <ImageView
                 android:id="@+id/detail_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 android:background="@drawable/noimage" />
         </LinearLayout>
@@ -90,7 +64,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="126dp"
                 android:layout_marginBottom="1dp"
                 android:background="#fff"
                 android:paddingLeft="16dp"
@@ -115,34 +89,56 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginBottom="1dp"
                 android:background="#fff"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <!-- 작성자/작성일자 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="7dp">
+
+                    <ImageView
+                        android:id="@+id/icon_profile"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_account_account" />
 
                     <TextView
                         android:id="@+id/writer_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
                         android:text="작성자"
                         android:textSize="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="180dp">
+
+                    <ImageView
+                        android:id="@+id/icon_calender"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_today_black_24dp" />
 
                     <TextView
                         android:id="@+id/writedate_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="190dp"
+                        android:layout_marginLeft="7dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:text="작성일자"
                         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+                </LinearLayout>
                     <TextView
                         android:id="@+id/id"
                         android:layout_width="wrap_content"
@@ -157,11 +153,11 @@
                 <com.google.android.material.bottomnavigation.BottomNavigationView
                     android:id="@+id/bottomNavigationView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="0dp"
                     app:itemBackground="?attr/colorPrimary"
-                    app:itemIconTint="@android:color/white"
+                    app:itemIconTint="@android:color/black"
                     app:itemTextColor="@android:color/white"
                     app:menu="@menu/bottombar_menu2" />
             </LinearLayout>

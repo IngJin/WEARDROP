@@ -54,7 +54,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         String writer = currentItem.getWriter();
         String title = currentItem.getTitle();
         String content = currentItem.getContent();
-        String readcnt = currentItem.getReadcnt();
         String filepath = currentItem.getFilepath();
         String writedate = currentItem.getWritedate();
 
@@ -62,9 +61,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
         //holder.mTextViewWriter.setText(writer);
         //holder.mTextViewTitle.setText(title);
         //holder.mTextViewContent.setText(content);
-        holder.mTextViewReadcnt.setText(readcnt);
         //holder.mTextViewWritedate.setText(writedate);
-        Glide.with(mContext).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(holder.mimageView); //.override(250,250)
+        Glide.with(mContext).load("http://112.164.58.217:80/weardrop/resources" + filepath).into(holder.mimageView); //.override(250,250)
         Log.i("xx",filepath);
 
     }
@@ -90,7 +88,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
             //mTextViewWriter = itemView.findViewById(R.id.gal_writer);
             //mTextViewTitle = itemView.findViewById(R.id.gal_title);
             //mTextViewContent = itemView.findViewById(R.id.gal_content);
-            mTextViewReadcnt = itemView.findViewById(R.id.gal_readcnt);
             //mTextViewWritedate = itemView.findViewById(R.id.gal_writedate);
 
             itemView.setOnClickListener(new View.OnClickListener() {

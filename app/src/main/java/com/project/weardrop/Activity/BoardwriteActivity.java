@@ -59,7 +59,7 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
     private TextView writer;
     Spinner Spinner;
     String code, filepath;
-    private String upload_URL = "http://112.164.58.7:80/weardrop_app/commu.com"; // Request를 요청 할 URL
+    private String upload_URL = "http://112.164.58.217:80/weardrop_app/commu.com"; // Request를 요청 할 URL
 
     //갤러리로 넘어가는 상수
     private final int GALLERY = 1;
@@ -125,13 +125,9 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
                     uploadImage(bitmap); // 버튼을 클릭했을 때 request 객체를 만들고 request queue 에넣는다.
                     if(code=="1"){
                         Intent saleintent = new Intent(BoardwriteActivity.this, SaleActivity.class);
-                        saleintent.putExtra("dto", dto);
-                        startActivity(saleintent);
                         finish();
                     } else {
                         Intent freeintent = new Intent(BoardwriteActivity.this, Board.class);
-                        freeintent.putExtra("dto", dto);
-                        startActivity(freeintent);
                         finish();
                     }
                     Toast.makeText(BoardwriteActivity.this, "게시글이 저장되었습니다. 새로고침해주세요!", Toast.LENGTH_LONG).show();
@@ -147,7 +143,7 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
         });
 
         //스피너에 표시할 항목을 정의
-        String datas[]={"세일정보", "자유글", "후기"};
+        String datas[]={"자유글", "세일정보"};
 
         //문자열 어댑터 선언하고 어댑터 객체를 생성한 후, 보여질 아이템 리소스와 문자열 지정
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,datas);
@@ -221,8 +217,6 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
                                 rQueue.getCache().clear();
                                 try {
                                     JSONObject jsonObject = new JSONObject(new String(response.data));
-                                   // Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-
                                     jsonObject.toString().replace("\\\\", "");
 
                                     if (jsonObject.getString("status").equals("true")) {
@@ -331,7 +325,6 @@ public class BoardwriteActivity extends AppCompatActivity implements AdapterView
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
                         }
                         // check for permanent denial of any permission
                         if (report.isAnyPermissionPermanentlyDenied()) {

@@ -12,35 +12,47 @@
 
     <Button
         android:id="@+id/notice"
-        android:layout_width="90dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:text="공지사항"
-        android:textSize="15sp" />
+        android:fontFamily="@font/jalnan"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:background="@drawable/select"/>
 
     <Button
         android:id="@+id/qna"
-        android:layout_width="140dp"
+        android:layout_width="180dp"
         android:layout_height="50dp"
         android:text="자주묻는 질문"
-        android:textSize="15sp" />
+        android:fontFamily="@font/jalnan"
+        android:textSize="15sp"
+        android:background="@drawable/non_select"/>
 
     </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="485dp">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:onClick="onClick">
     </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         app:itemBackground="?attr/colorPrimary"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
-        app:menu="@menu/bottombar_menu"
+        app:itemIconTint="@android:color/black"
+        app:menu="@menu/bottombar_menu4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_gravity="bottom"
         android:layout_marginBottom="0dp" />
 

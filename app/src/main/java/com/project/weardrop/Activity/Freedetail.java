@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.R;
 
 import org.json.JSONObject;
@@ -43,13 +44,18 @@ public class Freedetail extends AppCompatActivity implements Runnable {
     ImageView imageView;
     private ArrayList<Freelistitem> mFreeList;
 
+    MemberDTO dto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freedetail);
         mFreeList = new ArrayList<>();
 
+        final Intent intent = getIntent(); // 데이터 수신
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
         // bottom) 버튼 클릭시 사용되는 리스너를 구현
+
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -58,7 +64,10 @@ public class Freedetail extends AppCompatActivity implements Runnable {
                         // 어떤 메뉴 아이템이 터치되었는지 확인
                         switch (item.getItemId()) {
                             case R.id.menuitem_bottombar_home:
-                                Toast.makeText(getApplicationContext(), "홈버튼 클릭", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Freedetail.this, Board.class);
+                                intent.putExtra("dto", dto);
+                                startActivity(intent);
+                                finish();
                                 return true;
 
                             case R.id.menuitem_bottombar_update:
@@ -83,6 +92,7 @@ public class Freedetail extends AppCompatActivity implements Runnable {
                                                 intent.putExtra("content", textViewContent.getText().toString());
                                                 intent.putExtra("writer", textViewWriter.getText().toString());
                                                 intent.putExtra("writedate", textViewWritedate.getText().toString());
+                                                intent.putExtra("dto", dto);
                                                 startActivity(intent);
                                             }
                                         });
@@ -121,9 +131,6 @@ public class Freedetail extends AppCompatActivity implements Runnable {
                 }
                 });
 
-        //서버에서 데이터 가져오기
-        final Intent intent = getIntent();
-
         id = intent.getStringExtra(EXTRA_ID);
         String title = intent.getStringExtra(EXTRA_TITLE);
         String writer = intent.getStringExtra(EXTRA_WRITER);
@@ -147,12 +154,12 @@ public class Freedetail extends AppCompatActivity implements Runnable {
 
         textViewId.setVisibility(View.INVISIBLE);       //레이아웃에서 id값(textview) 안보이게 하기
 
-        Glide.with(this).load("http://112.164.58.7:80/weardrop_app/resources" + filepath).into(mimageView);
+        Glide.with(this).load("http://112.164.58.217:80/weardrop/resources" + filepath).into(mimageView);
     }
 
     @Override
     public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/anddelete.com" ;
+            String url = "http://112.164.58.217:80/weardrop_app/anddelete.com" ;
 
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -180,6 +187,7 @@ public class Freedetail extends AppCompatActivity implements Runnable {
                         if (message != null) {
                             Intent intent = new Intent(Freedetail.this, Board.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("dto", dto);
                             startActivity(intent);
                             Toast.makeText(Freedetail.this,"게시글이 삭제되었습니다.", Toast.LENGTH_LONG).show();
                         }

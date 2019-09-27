@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     RelativeLayout layout;
     EditText editid, editpwd, email, userid, writer, userpw, find_id, find_eamil;
     Button btnLogin, btnsign;
-    Button KaKaoButton;
+    Button KaKaoButton, naverButton;
     LoginButton KaKaoButtonLogin;
 
     SessionCallback callback;
@@ -97,6 +97,16 @@ public class LoginActivity extends AppCompatActivity {
         KaKaoButtonLogin = (LoginButton) findViewById(R.id.KaKaoButtonLogin);
         KaKaoButtonLogin.setVisibility(View.GONE);
 
+        naverLogInButton = (OAuthLoginButton) findViewById(R.id.buttonNaverLogin);
+        naverLogInButton.setVisibility(View.GONE);
+
+        naverButton = (Button) findViewById(R.id.naverButton);
+        naverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                naverLogInButton.performClick();
+            }
+        });
 
         KaKaoButton = (Button) findViewById(R.id.KaKaoButton);
         KaKaoButton.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +117,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // 앱 배경화면
-        layout = findViewById(R.id.layout);
-        layout.setBackgroundResource(R.drawable.background);
+        //layout = findViewById(R.id.layout);
+        //layout.setBackgroundResource(R.drawable.background);
 
         // 버튼 이미지
         KaKaoButton = findViewById(R.id.KaKaoButton);
@@ -144,7 +154,6 @@ public class LoginActivity extends AppCompatActivity {
         Typeface typeface = getResources().getFont(R.font.nanumgothic);
         editid.setTypeface(typeface);
         editpwd.setTypeface(typeface);
-        btnLogin.setTypeface(typeface);
         btnsign.setTypeface(typeface);
 
         findid = findViewById(R.id.findid);
@@ -262,6 +271,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -410,7 +420,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread1 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/login_android";
+            String url = "http://112.164.58.217:80/weardrop_app/login_android";
             String userid = editid.getText().toString();
             String userpw = editpwd.getText().toString();
             try {
@@ -470,7 +480,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread2 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/email_check_android";
+            String url = "http://112.164.58.217:80/weardrop_app/email_check_android";
             String email_thread2 = email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -535,7 +545,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread3 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/email_login_android";
+            String url = "http://112.164.58.217:80/weardrop_app/email_login_android";
             String email_Thread3 = email.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -593,7 +603,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread4 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/android_userid_find";
+            String url = "http://112.164.58.217:80/weardrop_app/android_userid_find";
             String email = find_eamil.getText().toString();
             try {
                 // NmaeValuePair 변수명과 값을 함께 저장하는 객체
@@ -634,7 +644,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread5 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/android_userpw_find";
+            String url = "http://112.164.58.217:80/weardrop_app/android_userpw_find";
             String userid = find_id.getText().toString();
             String email = find_eamil.getText().toString();
             try {
@@ -676,7 +686,7 @@ public class LoginActivity extends AppCompatActivity {
     class Thread6 extends Thread {
         @Override
         public void run() {
-            String url = "http://112.164.58.7:80/weardrop_app/sign_android";
+            String url = "http://112.164.58.217:80/weardrop_app/sign_android";
             String userId = userid.getText().toString();
             String Writer = writer.getText().toString();
             String userPw = userpw.getText().toString();
@@ -707,7 +717,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(message != null) {
-                          Toast.makeText(getApplicationContext(), "환영합니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "환영합니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

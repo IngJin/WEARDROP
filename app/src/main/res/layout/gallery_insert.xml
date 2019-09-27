@@ -27,8 +27,8 @@
                 <!-- 프로필 -->
                 <ImageView
                     android:id="@+id/icon_profile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_account_account" />
 
@@ -39,28 +39,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/icon_arrow"
                     android:layout_toRightOf="@+id/icon_profile"
                     android:orientation="vertical">
 
                     <!-- 작성자 -->
-                    <EditText
+                    <TextView
                         android:id="@+id/add_writer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="글작성자"
                         android:textAlignment="center"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         />
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/icon_arrow"
-                    android:layout_width="15dp"
-                    android:layout_height="18dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_arrow" />
             </RelativeLayout>
 
             <LinearLayout
@@ -80,35 +70,11 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp"
                     android:text="이미지 업로드"
+                    android:background="@drawable/select"
+                    android:fontFamily="@font/jalnan"
+                    android:textColor="#FFFFFF"
                     android:id="@+id/ImageBtn"/>
             </LinearLayout>
-
-            <!-- footer -->
-         <!--   <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ddd"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:background="#fff"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
-                    <Button
-                        android:id="@+id/add_image_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/icon_eye"
-                        android:text="파일 업로드"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                </RelativeLayout>
-            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textAlignment="center"
-                            android:hint="제목을 입력하세요..." />
+                            android:hint="제목을 입력하세요." />
 
                         <EditText
                             android:id="@+id/add_content"
@@ -145,7 +111,7 @@
                             android:layout_height="120dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:hint="내용을 입력하세요..."
+                            android:hint="내용을 입력하세요."
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textAlignment="center"
                             android:textColor="@android:color/darker_gray"
@@ -169,14 +135,25 @@
                         android:id="@+id/add_btn"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/select"
+                        android:fontFamily="@font/jalnan"
+                        android:textColor="#FFFFFF"
                         android:text="저장"/>
 
                     <Button
                         android:id="@+id/cancle_btn"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/select"
+                        android:fontFamily="@font/jalnan"
+                        android:textColor="#FFFFFF"
                         android:text="취소"/>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/add_userid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 

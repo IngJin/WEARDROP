@@ -19,14 +19,24 @@
         android:name=".Other.App"
         android:allowBackup="false"
         android:icon="@drawable/icon"
-        android:label="TeamProject"
+        android:label="WEARDROP"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".Activity.MapActivity"></activity>
 
+        <activity android:name=".Activity.MapActivity"></activity>
+        <activity android:name=".Activity.MirrorActivity" />
+        <activity android:name=".Activity.BuyUpdateActivity" />
+        <activity android:name=".Activity.SaleUpdateActivity" />
+        <activity android:name=".Activity.SelldetailActivity" />
+        <activity android:name=".Activity.SellUpdateActivity" />
+        <activity android:name=".Activity.Buydetail" />
+        <activity android:name=".Activity.SellActivity" />
+        <activity android:name=".Activity.BuywriteActivity" />
+        <activity android:name=".Activity.Buy" />
         <activity android:name=".Activity.GalleryInsertActivity"/>
+        <activity android:name=".Activity.GalleryUpdateActivity"/>
         <activity android:name=".Activity.GalleryDetailActivity"/>
         <activity android:name=".Activity.GalleryActivity"/>
         <activity android:name=".Activity.UpdateActivity" />
@@ -36,10 +46,6 @@
         <activity android:name=".Activity.BoardwriteActivity" />
         <activity android:name=".Activity.Board"/>
         <activity android:name=".Activity.MypageActivity" />
-        <activity android:name=".Activity.SecondSubAddActivity" />
-        <activity android:name=".Activity.SecondSubActivity" />
-        <activity android:name=".Activity.SecondDetailActivity" />
-        <activity android:name=".Activity.SecondActivity" />
         <activity android:name=".Activity.NoticeActivity" />
         <activity android:name=".Activity.CenterActivity" />
         <activity android:name=".Activity.CenterDetailActivity" />

@@ -7,15 +7,13 @@ public class GalleryDTO {
     private String writer;
     private String title;
     private String content;
-    private String readcnt;
     private String writedate;
 
-    public GalleryDTO(String id, String writer, String title, String content, String readcnt, String filepath, String writedate) {
+    public GalleryDTO(String id, String writer, String title, String content, String filepath, String writedate) {
         this.id = id;
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.readcnt = readcnt;
         this.filepath = filepath;
         this.writedate = writedate;
     }
@@ -78,13 +76,4 @@ public class GalleryDTO {
         this.content = content;
     }
 
-    public String getReadcnt() {
-
-        return readcnt;
-    }
-
-    public void setReadcnt(String readcnt) {
-
-        this.readcnt = readcnt;
-    }
 }

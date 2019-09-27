@@ -56,7 +56,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ItemView
         private TextView name;
         private TextView temp;
         LinearLayout layout;
-        TextView setTempcody;
+        TextView setTempcody, setTodaycody;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +65,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ItemView
             temp = itemView.findViewById(R.id.card_weather);
             layout = itemView.findViewById(R.id.weather_view);
             setTempcody = itemView.findViewById(R.id.setTempcody);
+            setTodaycody = itemView.findViewById(R.id.todaycody);
+
 
         }
 
@@ -88,21 +90,29 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ItemView
             double tmp = Double.parseDouble(data.getTemperature());
 
             if(tmp >= 27) {
-                setTempcody.setText("나시티, 반바지, 민소매, 원피스 입니다.");
+                setTodaycody.setText("오늘은 뭘 입어도 더운 날씨");
+                setTempcody.setText("민소매 반바지 원피스");
             } else if(tmp >= 23) {
-                setTempcody.setText("반팔, 얇은 셔츠, 얇은 긴팔, 반바지, 면바지 입니다.");
+                setTodaycody.setText("오늘은 뭘 입어도 더운 날씨");
+                setTempcody.setText("반팔 얇은 셔츠 얇은 긴팔 반바지 면바지");
             } else if(tmp >= 20) {
-                setTempcody.setText("긴팔티, 가디건, 후드티, 면바지, 슬렉스, 스키니 입니다.");
+                setTodaycody.setText("어디로든 떠나고 싶어지는 맑은 날씨");
+                setTempcody.setText("긴팔티 가디건 후드티 면바지 슬랙스 스키니");
             } else if(tmp >= 17) {
-                setTempcody.setText("니트, 가디건, 후드티, 맨투맨, 청바지, 면바지, 슬랙스, 원피스 입니다.");
+                setTodaycody.setText("어디로든 떠나고 싶어지는 맑은 날씨");
+                setTempcody.setText("니트 가디건 후드티 맨투맨 청바지 면바지 슬랙스 원피스");
             } else if(tmp >= 12) {
-                setTempcody.setText("자켓, 셔츠, 가디건, 간절기 야상, 살색스타킹 입니다.");
+                setTodaycody.setText("찬바람이 불기 시작했어요!");
+                setTempcody.setText("자켓 셔츠 가디건 간절기 야상");
             } else if(tmp >= 10) {
-                setTempcody.setText("트렌치코트, 간절기 야상, 여러겹 껴입기 입니다.");
+                setTodaycody.setText("여러분 외투의 계절이 돌아왔습니다!");
+                setTempcody.setText("트렌치코트 간절기 야상 여러겹 껴입기");
             } else if(tmp >= 6) {
-                setTempcody.setText("코트, 가죽자켓 입니다.");
+                setTodaycody.setText("겨울이 다가왔습니다!");
+                setTempcody.setText("가죽자켓 코트");
             } else {
-                setTempcody.setText("겨울 옷(야상, 패딩, 목도리 등등 다) 입니다.");
+                setTodaycody.setText("이불 밖은 위험해요!");
+                setTempcody.setText("날씨가 많이 추워요. 두껍게 입으시는 걸 추천드려요!");
             }
 
             int i_num = (int)tmp;

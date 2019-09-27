@@ -46,13 +46,15 @@ public class SaleActivity extends AppCompatActivity implements SaleListAdapter.O
     private RequestQueue mRequestQueue;
     private SwipeRefreshLayout swipeRefreshLayout=null;
 
+    MemberDTO dto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale);
 
         final Intent intent = getIntent(); // 데이터 수신
-        final MemberDTO dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
+        dto = (MemberDTO) intent.getSerializableExtra("dto"); /*클래스*/
 
         // bottom) 버튼 클릭시 사용되는 리스너를 구현
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
@@ -122,6 +124,7 @@ public class SaleActivity extends AppCompatActivity implements SaleListAdapter.O
                     public void run() {
                         swipeRefreshLayout.setRefreshing(true);
                         Intent intent = new Intent(getApplicationContext(), SaleActivity.class);
+                        intent.putExtra("dto", dto);
                         startActivity(intent);
                         finish();
                     }
@@ -144,7 +147,7 @@ public class SaleActivity extends AppCompatActivity implements SaleListAdapter.O
     }
 
     private void parseJSON(){
-        String url = "http://112.164.58.7:80/weardrop_app/sale.com";
+        String url = "http://112.164.58.217:80/weardrop_app/sale.com";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -198,6 +201,7 @@ public class SaleActivity extends AppCompatActivity implements SaleListAdapter.O
         detailIntent.putExtra(EXTRA_WRITEDATE, clickedItem.getWritedate());
         detailIntent.putExtra(EXTRA_CONTENT, clickedItem.getContent());
        detailIntent.putExtra(EXTRA_FILEPATH, clickedItem.getFilepath());
+       detailIntent.putExtra("dto", dto);
         startActivity(detailIntent);
     }
 }

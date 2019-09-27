@@ -16,7 +16,7 @@ import java.io.OutputStream;
 public class CommonMethod {
 
     /*public static String  ipConfig = "http://192.168.200.151:8989";*/
-    public static String ipConfig = "http://192.168.0.37:80"; //로컬 다른곳에서는 못씀
+    public static String ipConfig = "http://112.164.58.217:80"; //로컬 다른곳에서는 못씀
     //public static String  ipConfig = "http://121.148.239.200:80"; // 고정 아이피 어디서든 쓸수있음
 
     // 네트워크에 연결되어 있는가

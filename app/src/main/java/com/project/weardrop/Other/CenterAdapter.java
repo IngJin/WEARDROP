@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.weardrop.Activity.CenterDetailActivity;
 import com.project.weardrop.Activity.NoticeDetailActivity;
+import com.project.weardrop.DTO.MemberDTO;
 import com.project.weardrop.DTO.NoticeDTO;
 import com.project.weardrop.R;
 
@@ -20,6 +21,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<NoticeDTO> listData = new ArrayList<>();
+    private ArrayList<MemberDTO> listData2 = new ArrayList<>();
 
 
     @NonNull
@@ -39,6 +41,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
         holder.onBind(listData.get(position));
+        holder.onBind(listData2.get(position));
     }
 
     @Override
@@ -52,6 +55,11 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
         listData.add(data);
     }
 
+    public void addItem(MemberDTO dto) {
+        listData2.add(dto);
+
+    }
+
 
     class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -62,6 +70,8 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
         private String writer;
         private String content;
         private NoticeDTO data;
+        private MemberDTO dto;
+        private MemberDTO data_dto;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +91,10 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
             itemView.setOnClickListener(this);
         }
 
+        public void onBind(MemberDTO data_dto) {
+            dto = data_dto;
+        }
+
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), CenterDetailActivity.class);
@@ -88,6 +102,7 @@ public class CenterAdapter extends RecyclerView.Adapter<CenterAdapter.ItemViewHo
             intent.putExtra("title", title);
             intent.putExtra("writer", writer);
             intent.putExtra("content", content);
+            intent.putExtra("dto", dto);
             v.getContext().startActivity(intent);
         }
     }
