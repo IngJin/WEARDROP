@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gallery.mapper">
+	<select id="list" resultType="gallery.GalleryVO">
+		select rownum no, n.*
+		from (select * from ootd <include refid="search"/>) n
+		order by no desc
+	</select>
+	
+	<sql id="search">
+		<if test="search=='title' or search=='content' or search=='writer' or search=='writedate'">
+			where ${search} like '%' || #{keyword} || '%'
+		</if>
+		<if test="search=='all'">
+			where title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or writer in '%' || #{keyword} || '%'
+			or writedate in '%' || #{keyword} || '%'
+		</if>
+	</sql>
+	
+	<select id="detail" resultType="gallery.GalleryVO">
+		select * from ootd where id=#{id}
+	</select>
+	
+	<insert id="insert">
+		insert into ootd (title, content, writer, filename, filepath)
+		values (#{title}, #{content}, #{writer}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="read">
+		update ootd set readcnt = readcnt+1 where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from ootd where id=#{id}
+	</delete>
+	
+	<update id="update">
+		update ootd set title=#{title}, content=#{content},
+							filename = #{filename, jdbcType=VARCHAR}, 
+							filepath = #{filepath, jdbcType=VARCHAR}
+		where id=#{id}
+	</update>
+	
+	<update id="galupdate">
+		update ootd set filepath = replace(filepath, '\', '/')
+	</update>
+	
+	<insert id="andInsert">
+		insert into ootd (userid, title, content, writer, filename, filepath)
+		values (#{userid}, #{title}, #{content}, #{writer}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="andlist" resultType="gallery.GalleryVO">
+		select * from ootd order by id desc
+	</select>
+	
+	<delete id="anddelete">
+		delete from ootd where id=#{id}
+	</delete>
+	
+	<update id="andupdate">
+	 	update ootd set title=#{title}, content=#{content}, filename=#{filename, jdbcType=VARCHAR},
+					  filepath=#{filepath, jdbcType=VARCHAR} where id=#{id}
+	</update> 
+	
+</mapper>

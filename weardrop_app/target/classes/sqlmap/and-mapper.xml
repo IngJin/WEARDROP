@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="and.mapper">
+	<select id="list" resultType="sell.SellVO">  <!-- 판매  -->
+		select rownum no, c.* from(select * from sell where code = 2 order by id)c order by no desc 
+	</select>
+	
+	<select id="list2" resultType="sell.SellVO">	<!-- 구매  -->
+		select rownum no, c.* from(select * from sell where code = 1 order by id)c order by no desc 
+	</select>	
+	
+	<select id="list3" resultType="hugi.HugiVO">	<!--후기  -->
+		select rownum no, c.* from(select * from hugiboard where code = 3 order by id)c order by no desc 
+	</select>
+	
+	<insert id="insert">
+		insert into sell (userid, code, writer, title, price, content, filename, filepath)
+		values(#{userid}, #{code}, #{writer}, #{title}, #{price}, #{content} , #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="filepathupdate">
+		update sell set filepath = replace(filepath, '\','/')
+	</update>
+	
+	<insert id="hugiinsert">
+		insert into hugiboard (userid, code, writer, title, content, filename, filepath)
+		values(#{userid}, #{code}, #{writer}, #{title}, #{content} , #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR})
+	</insert>
+	 <delete id="delete">
+		delete from sell where id=#{id}
+	</delete>
+	
+	<delete id="hugidelete">
+		delete from hugiboard where id=#{id}
+	</delete>
+	
+	 <update id="update">
+	 	update sell set title=#{title}, content=#{content}, filename=#{filename, jdbcType=VARCHAR},
+					  filepath=#{filepath, jdbcType=VARCHAR} where id=#{id}
+	</update> 
+	
+	<update id="hugiupdate">
+	 	update hugiboard set title=#{title}, content=#{content}, filename=#{filename, jdbcType=VARCHAR},
+					  filepath=#{filepath, jdbcType=VARCHAR} where id=#{id}
+	</update> 
+	
+	<insert id="comment_insert">              
+		insert into board_comments(content)
+		values (#{content})
+	</insert>
+	
+	<select id="comment_list" resultType="community.CommentVO">
+		select c.*, (select writer from member2 where userid = c.userid) writer,
+		to_char(writedate, 'yyyy-mm-dd hh24:mi:ss') writedate from board_comments c where pid=#{id} order by id desc
+	</select>
+</mapper>

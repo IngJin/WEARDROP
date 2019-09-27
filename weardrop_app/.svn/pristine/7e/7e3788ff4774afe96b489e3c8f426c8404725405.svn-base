@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper">
+
+<update id="update">
+	update member2 set writer=#{writer}, userpw=#{userpw}, email=#{email}
+		where userid=#{userid}
+</update>
+
+<select id="id_check" resultType="integer">
+	select count(*) from member2 where userid = #{userid}
+</select>
+
+<insert id="insert">
+	insert into member2(userid, writer, userpw, email)
+	values ( #{userid}, #{writer}, #{userpw}, #{email})
+</insert>
+
+<select id="login" resultType="main.MainVO">
+	select * from member2 where userid = #{userid} and userpw = #{userpw}
+</select>
+
+<select id="email_login" resultType="main.MainVO">
+	select * from member2 where email = #{email}
+</select>
+
+<select id="userid_find" resultType="main.MainVO">
+	select * from member2 where email = #{email}
+</select>
+
+<select id="userpw_find" resultType="main.MainVO">
+	select * from member2 where userid = #{userid} and email = #{email}
+</select>
+
+<select id="email_check" resultType="integer">
+	select count(*) from member2 where email = #{email}
+</select>
+
+<delete id="delete">
+	delete from member2 where userid = #{userid}
+</delete>
+
+<insert id="kakao_insert">
+	insert into member2(userid, writer, email, userpw)
+	values ( #{userid}, #{writer}, #{email}, #{userpw} )
+</insert>
+
+<select id="iot_userid_find" resultType="main.MirrorVO">
+	select * from iot_mirror where userid = #{userid}
+</select>
+
+<insert id="iot_sign">
+	insert into iot_mirror(userid)
+	values (#{userid})
+</insert>
+
+<update id="iot_time">
+	update iot_mirror set time=#{time} where userid=#{userid}
+</update>
+
+<update id="iot_weather">
+	update iot_mirror set weather=#{weather} where userid=#{userid}
+</update>
+
+<delete id="iot_delete">
+	delete from iot_mirror where userid = #{userid}
+</delete>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice.mapper">
+<sql id ="search">
+	<if test="search=='title' or search=='content'">
+		where ${search} like '%' || #{keyword} || '%'
+	</if>
+	<if test="search=='writer'">
+		where ${search} in ( select writer from member2 where writer like '%' || #{keyword} || '%' )
+	</if>
+	<if test="search=='all'">
+		where title like '%' || #{keyword} || '%'
+		or content like '%' || #{keyword} || '%'
+		<!-- or writer like '%' || #{keyword} || '%' -->
+		or writer in ( select writer from member2 where writer like '%' || #{keyword} || '%' )
+	</if>
+</sql>
+
+<select id="list" resultType="notice.NoticeVO">
+<!-- 3.해당 페이지의 목록 조회 -->
+		select n.*, (select writer from member2 where userid = writer) writer from 
+	(select rownum no, n.* 
+		 from (select * from notice <include refid="search"/>
+		 order by id asc) n 
+		 order by no desc) n
+		 where no between #{beginList} and #{endList} 
+		 
+<!-- 2.검색조건에 맞는 목록 조회 -->
+	<!-- select rownum no, n.* 
+		 from (select * from notice <include refid="search"/>
+		 order by root, step desc) n 
+		 order by no desc -->
+		 
+<!-- 1. 무조건 모든 목록 조회 -->
+	<!-- from (select * from notice order by root, step desc) n order by no desc -->
+</select>
+
+<insert id="insert">
+		<!-- insert into notice (title, content, writer, filename, filepath)
+		values (#{title}, #{content}, #{writer}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}) -->
+		
+		<!-- 트리거를 사용하지 않게 한 경우 -->
+		insert into notice ( userid, title, content, writer)
+		values ( #{userid}, #{title}, #{content}, #{writer})
+	</insert>
+	
+<select id="detail" resultType="notice.NoticeVO">
+	select n.*, (select writer from member2 where userid=writer) writer from notice n where id=#{id}
+</select>
+
+<update id="read">
+	update notice set readcnt = readcnt+1 where id=#{id}
+</update>
+
+<delete id="delete">
+	delete from notice where id=#{id}
+</delete>
+
+<update id="update">
+	update notice set title=#{title}, content=#{content} where id=#{id}
+</update>
+
+<!-- < 를 문자로 해석할 처리 -->
+
+<select id="total" resultType="integer">
+	select count(*) from notice <include refid="search"/>
+</select>
+
+<select id="and_list" resultType="notice.NoticeVO">
+	select id, title, writer, content, writedate from notice order by id desc	
+</select>
+
+
+</mapper>
+

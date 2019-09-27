@@ -1,0 +1,73 @@
+{
+  "_from": "shuffle-text",
+  "_id": "shuffle-text@0.2.8",
+  "_inBundle": false,
+  "_integrity": "sha512-D+XLkkMlRd51axh1+bPXNI2LBw9DCSiBxPdACNC4w1OoMlpEEbvQ1UuKNuXaQZ3ZNaLuw0/phsxbv8AdAuk3dQ==",
+  "_location": "/shuffle-text",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "shuffle-text",
+    "name": "shuffle-text",
+    "escapedName": "shuffle-text",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/shuffle-text/-/shuffle-text-0.2.8.tgz",
+  "_shasum": "89dc97df7137df0bd8cd7a6de8e235bc03e62395",
+  "_spec": "shuffle-text",
+  "_where": "C:\\Users\\User",
+  "author": {
+    "name": "Yasunobu Ikeda",
+    "email": "ikeda@ics-web.jp",
+    "url": "http://clockmaker.jp/labs/"
+  },
+  "bugs": {
+    "url": "https://github.com/ics-ikeda/shuffle-text/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "ShuffleText ========",
+  "devDependencies": {
+    "lite-server": "^2.4.0",
+    "rollup": "^0.66.2",
+    "rollup-plugin-typescript": "^1.0.0",
+    "rollup-watch": "^4.3.1",
+    "tslib": "^1.9.3",
+    "typedoc": "^0.12.0",
+    "typescript": "^3.1.1",
+    "uglify-js": "^3.4.9"
+  },
+  "homepage": "https://github.com/ics-ikeda/shuffle-text",
+  "jsnext:main": "build/shuffle-text.module.js",
+  "keywords": [
+    "JavaScript",
+    "TypeScript",
+    "shuffle-text",
+    "text effect"
+  ],
+  "license": "MIT",
+  "main": "build/shuffle-text.js",
+  "module": "build/shuffle-text.module.js",
+  "name": "shuffle-text",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ics-ikeda/shuffle-text.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build:d.ts": "tsc --declarationDir ./build",
+    "build:docs": "typedoc --out ./docs ./src",
+    "lite": "lite-server",
+    "release": "rollup -c && uglifyjs ./build/shuffle-text.js --output build/shuffle-text.min.js",
+    "watch": "rollup -c --watch"
+  },
+  "types": "build/ShuffleText.d.ts",
+  "version": "0.2.8"
+}

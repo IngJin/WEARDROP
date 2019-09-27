@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hugi.mapper">
+	<select id="list" resultType="hugi.HugiVO">
+		<!-- select rownum no, c.* from(select * from hugiboard order by id)c order by no desc  -->
+		select rownum no, n.*
+		from (select * from hugiboard <include refid="search"/>) n
+		order by no desc
+	</select>
+	
+	<sql id="search">
+		<if test="search=='title' or search=='content' or search=='writer' or search=='writedate'">
+			where ${search} like '%' || #{keyword} || '%'
+		</if>
+		<if test="search=='all'">
+			where title like '%' || #{keyword} || '%'
+			or writer in '%' || #{keyword} || '%'
+		</if>
+	</sql>
+
+	<insert id="insert">
+		insert into hugiboard(userid, writer, title, content, filename, filepath)
+		values (#{userid}, #{writer}, #{title}, #{content}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="detail" resultType="hugi.HugiVO">
+		select * from hugiboard where id=#{id}
+	</select>
+	
+	<update id="read">
+		update hugiboard set readcnt = readcnt+1 where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from hugiboard where id=#{id}
+	</delete>
+	
+	<update id="update">
+		update hugiboard set title=#{title}, content=#{content}, filename=#{filename, jdbcType=VARCHAR},
+					  filepath=#{filepath, jdbcType=VARCHAR} where id=#{id}
+	</update>
+	
+	<insert id="comment_insert">
+		insert into hugi_comments(content, userid, pid)
+		values (#{content}, #{userid}, #{pid})
+	</insert>
+	
+	<select id="comment_list" resultType="community.CommentVO">
+		select c.*, (select writer from member2 where userid = c.userid) writer,
+		to_char(writedate, 'yyyy-mm-dd hh24:mi:ss') writedate
+	 	from hugi_comments c where pid=#{pid} order by id desc
+	</select>
+	
+	<update id="comment_update">
+		update hugi_comments set content=#{content} where id=#{id}
+	</update>
+	
+	<delete id="comment_delete">
+		delete from hugi_comments where id=#{id}
+	</delete>
+</mapper>

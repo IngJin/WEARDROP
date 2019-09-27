@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sell.mapper">
+	<insert id="insert">	
+		insert into sell (userid, writer, title, price, content, filename, filepath, code)
+		values (#{userid}, #{writer}, #{title}, #{price}, #{content}, #{filename, jdbcType=VARCHAR}, #{filepath, jdbcType=VARCHAR}, #{code})
+	</insert>
+	
+	<!-- 통합 페이징 -->
+ <select id="total" resultType="integer">
+	select count(*) from sell where code=#{code} <include refid="search"/> 
+</select> 
+
+<select id="list" resultType="sell.SellVO">
+       select s.*, (select writer from member2 where userid=s.userid) writer from (select rownum no, s.* 
+			from (select * from sell where code=#{code} <include refid="search"/> 
+		  		order by id) s
+				order by no desc) s
+	where no between #{beginList} and #{endList} 
+</select>
+
+
+	<select id="detail" resultType="sell.SellVO">
+		select * from sell where id=#{id}
+	</select>
+	
+	<update id="update">
+		update sell set title=#{title},  price=#{price}, content=#{content}, 
+			filename=#{filename, jdbcType=VARCHAR},
+			filepath=#{filepath, jdbcType=VARCHAR}
+			where id=#{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sell where id=#{id}
+	</delete>
+	
+	
+<!--     <sql id="search">
+      <if test="search=='title' or search=='content' or search=='writer' ">
+         where ${search} like '%' || #{keyword} || '%'
+      </if>
+      <if test="search=='all'">
+         where title like '%' || #{keyword} || '%'
+         or content like '%' || #{keyword} || '%'
+         or writer like '%' || #{keyword} || '%'
+      </if>
+   </sql>  -->
+   
+    <sql id="search">
+		<if test="search=='title' or search=='content' ">
+			and ${search} like '%' || #{keyword} || '%'
+		</if>
+		<if test="search=='writer'">
+			and userid in ( select userid from member2
+			                     where writer like '%' || #{keyword} || '%' )
+		</if>
+		<if test="search=='all'">
+			and ( title like '%' || #{keyword} || '%'
+			or content like '%' || #{keyword} || '%'
+			or userid in ( select userid from member2
+			               where writer like '%' || #{keyword} || '%' ) )
+		</if>
+	</sql> 
+	
+	<!-- 댓글 저장  -->
+	<insert id="comment_insert">
+		insert into sell_comment(content, userid, pid)
+		values(#{content}, #{userid}, #{pid})
+	</insert> 
+	
+	<!-- 댓글 목록 -->
+	<select id="comment_list" resultType="sell.CommentVO">
+		select c.*, (select writer from member2
+					where userid=c.userid) writer,
+			to_char(writedate, 'yyyy-mm-dd hh24:mi:ss') writedate
+		from sell_comment c where pid=#{pid} order by id desc
+	</select>
+	
+	<!-- 댓글 수정  -->
+	<update id="comment_update">
+		update sell_comment set content=#{content} where id=#{id}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="comment_delete">
+		delete from sell_comment where id=#{id}
+	</delete>
+	
+	<!-- click후 조회수 1씩 증가 -->
+	<update id="read">
+	update sell set readcnt = readcnt+1 where id=#{id} 
+	</update>
+	
+
+	
+	
+</mapper>
